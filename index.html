@@ -431,11 +431,18 @@
 
     /* ── Process ─────────────────────────────────────── */
     .process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:60px;position:relative}
-    .process-grid::before{content:'';position:absolute;top:36px;left:calc(12.5%+18px);right:calc(12.5%+18px);height:1px;background:linear-gradient(90deg,var(--teal),var(--navy),var(--teal));opacity:.2}
-    .p-step{text-align:center}
-    .p-step__num{width:72px;height:72px;border-radius:50%;background:rgba(59,189,212,.08);border:1.5px solid rgba(59,189,212,.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:var(--font-head);font-size:1.1rem;font-weight:900;background:linear-gradient(135deg,rgba(59,189,212,.12),rgba(26,63,92,.08));color:var(--teal-dark);position:relative;z-index:1}
+    .p-step{text-align:center;opacity:.25;transition:opacity .5s ease}
+    .p-step.active{opacity:1}
+    .p-step__num{width:72px;height:72px;border-radius:50%;border:1.5px solid rgba(59,189,212,.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:var(--font-head);font-size:1.1rem;font-weight:900;background:linear-gradient(135deg,rgba(59,189,212,.12),rgba(26,63,92,.08));color:var(--teal-dark);position:relative;z-index:1;transition:border-color .4s ease,box-shadow .4s ease}
+    .p-step.active .p-step__num{border-color:var(--teal);box-shadow:0 0 0 4px rgba(59,189,212,.12)}
+    @keyframes proc-bounce{0%,100%{transform:scale(1)}40%{transform:scale(1.18)}65%{transform:scale(.93)}80%{transform:scale(1.06)}}
+    .p-step.bounce .p-step__num{animation:proc-bounce .55s cubic-bezier(.34,1.4,.64,1)}
     .p-step h3{color:var(--navy);margin-bottom:9px;font-size:.98rem}
     .p-step p{font-size:.86rem}
+    /* Segmented connector line */
+    .proc-connector{position:absolute;top:36px;left:0;width:100%;pointer-events:none;z-index:0}
+    .proc-seg{position:absolute;top:0;height:2px;background:var(--teal);border-radius:999px;width:0;transition:width .45s ease-in-out;opacity:.5}
+    .proc-seg.drawn{width:100%}
 
     /* ── Clients ─────────────────────────────────────── */
     .clients-strip{padding:60px 0;background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -1172,11 +1179,16 @@
       <h2 class="gfade">A Proven Process for<br/>Exceptional Outcomes</h2>
       <p class="gfade">Four phases refined across 25+ years and 200+ ventures — from insight to impact.</p>
     </div>
-    <div class="process-grid">
-      <div class="p-step gfade"><div class="p-step__num">01</div><h3>Discover</h3><p>Deep-dive into your business, market, and audience to uncover the insights that shape strategy.</p></div>
-      <div class="p-step gfade"><div class="p-step__num">02</div><h3>Strategise</h3><p>Build a clear, actionable roadmap — with creative vision and commercial logic.</p></div>
-      <div class="p-step gfade"><div class="p-step__num">03</div><h3>Create</h3><p>Design, build, and craft solutions with precision — creativity meets world-class execution.</p></div>
-      <div class="p-step gfade"><div class="p-step__num">04</div><h3>Grow</h3><p>Launch, measure, optimise, and scale — ensuring your investment compounds over time.</p></div>
+    <div class="process-grid" id="processGrid">
+      <div class="proc-connector" aria-hidden="true">
+        <div class="proc-seg" id="pseg1" style="left:18.75%;width:0;max-width:20.83%"></div>
+        <div class="proc-seg" id="pseg2" style="left:43.75%;width:0;max-width:20.83%"></div>
+        <div class="proc-seg" id="pseg3" style="left:68.75%;width:0;max-width:20.83%"></div>
+      </div>
+      <div class="p-step" id="pstep1"><div class="p-step__num">01</div><h3>Discover</h3><p>Deep-dive into your business, market, and audience to uncover the insights that shape strategy.</p></div>
+      <div class="p-step" id="pstep2"><div class="p-step__num">02</div><h3>Strategise</h3><p>Build a clear, actionable roadmap — with creative vision and commercial logic.</p></div>
+      <div class="p-step" id="pstep3"><div class="p-step__num">03</div><h3>Create</h3><p>Design, build, and craft solutions with precision — creativity meets world-class execution.</p></div>
+      <div class="p-step" id="pstep4"><div class="p-step__num">04</div><h3>Grow</h3><p>Launch, measure, optimise, and scale — ensuring your investment compounds over time.</p></div>
     </div>
   </div>
 </section>
@@ -1487,6 +1499,33 @@ gsap.utils.toArray('.gfade').forEach(el=>{
     scrollTrigger:{trigger:el,start:'top 90%',toggleActions:'play none none none'}
   });
 });
+
+// Process sequence — activate steps one by one as section enters view
+(()=>{
+  let fired=false;
+  const obs=new IntersectionObserver(([e])=>{
+    if(e.isIntersecting && !fired){
+      fired=true; obs.disconnect();
+      const steps=[1,2,3,4];
+      const segs=[1,2,3];
+      // Activate step 1 immediately
+      const activate=(i)=>{
+        const step=document.getElementById('pstep'+i);
+        step.classList.add('active');
+        setTimeout(()=>step.classList.add('bounce'),50);
+        // Draw connector to next step
+        if(i<4){
+          setTimeout(()=>{
+            document.getElementById('pseg'+i).style.width='100%';
+          },300);
+          setTimeout(()=>activate(i+1),800);
+        }
+      };
+      activate(1);
+    }
+  },{threshold:0.3});
+  obs.observe(document.getElementById('processGrid'));
+})();
 
 // ── Endorsement Carousel — infinite center-highlight loop ──
 (function(){
