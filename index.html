@@ -435,13 +435,13 @@
     .p-step.active{opacity:1}
     .p-step__num{width:72px;height:72px;border-radius:50%;border:1.5px solid rgba(59,189,212,.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:var(--font-head);font-size:1.1rem;font-weight:900;background:linear-gradient(135deg,rgba(59,189,212,.12),rgba(26,63,92,.08));color:var(--teal-dark);position:relative;z-index:1;transition:border-color .4s ease,box-shadow .4s ease}
     .p-step.active .p-step__num{border-color:var(--teal);box-shadow:0 0 0 4px rgba(59,189,212,.12)}
-    @keyframes proc-bounce{0%,100%{transform:scale(1)}40%{transform:scale(1.18)}65%{transform:scale(.93)}80%{transform:scale(1.06)}}
-    .p-step.bounce .p-step__num{animation:proc-bounce .55s cubic-bezier(.34,1.4,.64,1)}
+    @keyframes proc-bounce{0%,100%{transform:scale(1)}35%{transform:scale(1.08)}65%{transform:scale(.97)}82%{transform:scale(1.03)}}
+    .p-step.bounce .p-step__num{animation:proc-bounce .9s cubic-bezier(.34,1.2,.64,1)}
     .p-step h3{color:var(--navy);margin-bottom:9px;font-size:.98rem}
     .p-step p{font-size:.86rem}
     /* Segmented connector line */
     .proc-connector{position:absolute;top:36px;left:0;width:100%;pointer-events:none;z-index:0}
-    .proc-seg{position:absolute;top:0;height:2px;background:var(--teal);border-radius:999px;width:0;transition:width .45s ease-in-out;opacity:.5}
+    .proc-seg{position:absolute;top:0;height:2px;background:var(--teal);border-radius:999px;width:0;transition:width .7s ease;opacity:.5}
     .proc-seg.drawn{width:100%}
 
     /* ── Clients ─────────────────────────────────────── */
@@ -1181,9 +1181,9 @@
     </div>
     <div class="process-grid" id="processGrid">
       <div class="proc-connector" aria-hidden="true">
-        <div class="proc-seg" id="pseg1" style="left:18.75%;width:0;max-width:20.83%"></div>
-        <div class="proc-seg" id="pseg2" style="left:43.75%;width:0;max-width:20.83%"></div>
-        <div class="proc-seg" id="pseg3" style="left:68.75%;width:0;max-width:20.83%"></div>
+        <div class="proc-seg" id="pseg1"></div>
+        <div class="proc-seg" id="pseg2"></div>
+        <div class="proc-seg" id="pseg3"></div>
       </div>
       <div class="p-step" id="pstep1"><div class="p-step__num">01</div><h3>Discover</h3><p>Deep-dive into your business, market, and audience to uncover the insights that shape strategy.</p></div>
       <div class="p-step" id="pstep2"><div class="p-step__num">02</div><h3>Strategise</h3><p>Build a clear, actionable roadmap — with creative vision and commercial logic.</p></div>
@@ -1506,19 +1506,30 @@ gsap.utils.toArray('.gfade').forEach(el=>{
   const obs=new IntersectionObserver(([e])=>{
     if(e.isIntersecting && !fired){
       fired=true; obs.disconnect();
-      const steps=[1,2,3,4];
-      const segs=[1,2,3];
-      // Activate step 1 immediately
+
+      // Position each connector segment flush against the disc edges
+      const grid=document.getElementById('processGrid');
+      const gridRect=grid.getBoundingClientRect();
+      for(let i=1;i<=3;i++){
+        const aRect=document.querySelector('#pstep'+i+' .p-step__num').getBoundingClientRect();
+        const bRect=document.querySelector('#pstep'+(i+1)+' .p-step__num').getBoundingClientRect();
+        const seg=document.getElementById('pseg'+i);
+        const segLeft=aRect.right-gridRect.left;
+        const segMax=bRect.left-aRect.right;
+        seg.style.left=segLeft+'px';
+        seg.style.maxWidth=segMax+'px';
+      }
+
+      // Sequential activation: step lights up, brief pause to read, then line draws, then next step
       const activate=(i)=>{
         const step=document.getElementById('pstep'+i);
         step.classList.add('active');
-        setTimeout(()=>step.classList.add('bounce'),50);
-        // Draw connector to next step
+        setTimeout(()=>step.classList.add('bounce'),60);
         if(i<4){
-          setTimeout(()=>{
-            document.getElementById('pseg'+i).style.width='100%';
-          },300);
-          setTimeout(()=>activate(i+1),800);
+          // Wait 600ms after step activates before drawing line (let user read)
+          setTimeout(()=>{ document.getElementById('pseg'+i).style.width='100%'; },600);
+          // Next step activates 1400ms after this one (600 read + 700 line draw + 100 pause)
+          setTimeout(()=>activate(i+1),1400);
         }
       };
       activate(1);
@@ -1640,7 +1651,7 @@ gsap.utils.toArray('.gfade').forEach(el=>{
 
   function resetTimer(){
     clearInterval(timer);
-    timer = setInterval(()=>step(1), 4800);
+    timer = setInterval(()=>step(1), 6800);
   }
 
   // ── Init ──
