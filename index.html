@@ -27,20 +27,20 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
-      /* Brand colors extracted from logo */
-      --teal:       #3BBDD4;
-      --teal-light: #5CD0E6;
-      --teal-dark:  #1E8FA8;
-      --navy:       #1A3F5C;
-      --navy-mid:   #122D43;
-      --navy-dark:  #0C1E2E;
-      --navy-light: #274D6E;
+      /* Brand colors from official logo */
+      --teal:       #4AAFC4;
+      --teal-light: #5ECFDE;
+      --teal-dark:  #3A9AB8;
+      --navy:       #1E5F8A;
+      --navy-mid:   #174E74;
+      --navy-dark:  #0F3550;
+      --navy-light: #2B7BA8;
 
       /* UI palette */
       --bg:         #F5F8FA;
@@ -52,11 +52,11 @@
       --border-mid: rgba(26,63,92,.18);
 
       /* Gradients */
-      --grad-brand: linear-gradient(135deg,#5CD0E6 0%,#3BBDD4 35%,#1E8FA8 65%,#1A3F5C 100%);
+      --grad-brand: linear-gradient(135deg,#1E5F8A 0%,#3A9AB8 40%,#4AAFC4 70%,#5ECFDE 100%);
       --grad-dark:  linear-gradient(135deg,#1A3F5C 0%,#0C1E2E 100%);
 
-      --font-head: 'Inter', sans-serif;
-      --font-body: 'Inter', sans-serif;
+      --font-head: 'Lexend', sans-serif;
+      --font-body: 'Lexend', sans-serif;
       --radius-sm: 10px;
       --radius-md: 18px;
       --radius-lg: 28px;
@@ -70,7 +70,7 @@
     }
     html{scroll-behavior:smooth}
     body{font-family:var(--font-body);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
-    h1,h2,h3,h4{font-family:var(--font-head);font-weight:900;line-height:1.1;letter-spacing:-.03em}
+    h1,h2,h3,h4{font-family:var(--font-head);font-weight:700;line-height:1.1;letter-spacing:-.01em}
     h1{font-size:clamp(3rem,7vw,6.5rem)}
     h2{font-size:clamp(2rem,4vw,3.5rem)}
     h3{font-size:clamp(1.1rem,2vw,1.35rem);font-weight:700;letter-spacing:-.02em}
@@ -100,29 +100,41 @@
     .btn svg{flex-shrink:0}
 
     /* ── Logo SVG ────────────────────────────────────── */
-    .logo-mark{width:36px;height:24px;display:inline-block;vertical-align:middle}
-    .logo-wordmark{font-family:var(--font-head);font-size:1.1rem;font-weight:900;letter-spacing:-.03em;color:var(--navy)}
+    .logo-mark{width:44px;height:40px;display:inline-block;vertical-align:middle}
+    .logo-wordmark{font-family:var(--font-head);font-size:.95rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--navy)}
     .logo-wrap{display:flex;align-items:center;gap:10px;text-decoration:none}
 
     /* ── Navbar ──────────────────────────────────────── */
     .nav-outer{position:fixed;top:0;left:0;right:0;z-index:200;padding:20px 0;transition:padding var(--t)}
-    .nav-pill{max-width:980px;margin:0 auto;background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--radius-pill);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:nowrap;box-shadow:var(--shadow-sm);transition:all var(--t)}
+    .nav-pill{max-width:980px;margin:0 auto;background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--radius-pill);padding:5px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:nowrap;box-shadow:var(--shadow-sm);transition:all var(--t);position:relative}
+    .nav-pill .logo-wrap{position:relative}
     .nav-outer.scrolled .nav-pill{background:rgba(255,255,255,.96);box-shadow:var(--shadow-md)}
     .nav__links{display:flex;align-items:center;gap:20px;list-style:none;flex-shrink:0}
     .nav__links a{font-size:.84rem;font-weight:600;color:var(--text-mid);white-space:nowrap;transition:color var(--t)}
     .nav__links a:hover{color:var(--navy)}
     .nav__cta{display:flex;align-items:center;gap:8px;flex-shrink:0}
 
+    /* ── Hero watermark ─────────────────────────────── */
+    .hero-watermark{position:fixed;top:0;left:0;width:100%;height:100dvh;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:1;transform:translateY(10px)}
+    .hero-edge-fade{position:absolute;top:0;height:100%;pointer-events:none;z-index:3}
+    .hero-edge-fade--left{left:0;width:220px;background:linear-gradient(to right,var(--bg) 0%,transparent 100%)}
+    .hero-edge-fade--right{right:0;width:380px;background:linear-gradient(to left,var(--bg) 20%,transparent 100%)}
+    .hero-watermark img{width:97vw;max-width:1170px;height:auto;opacity:.10;mix-blend-mode:multiply;user-select:none;will-change:opacity}
+
     /* ── Hero ────────────────────────────────────────── */
-    .hero{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:140px 24px 80px;background:var(--bg)}
+    .hero{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:140px 24px 80px;background:transparent;z-index:2}
+    .hero__content{position:relative;z-index:2}
     /* Grid background */
     .hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(26,63,92,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(26,63,92,.05) 1px,transparent 1px);background-size:80px 80px;pointer-events:none}
     /* Radial fade over grid */
     .hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,transparent 40%,var(--bg) 100%);pointer-events:none}
-    .hero__content{position:relative;z-index:1;text-align:center;max-width:960px}
-    .hero__eyebrow{margin-bottom:28px}
+    .hero__content{position:relative;z-index:1;text-align:center;max-width:960px;margin-top:16px}
+    .hero__eyebrow{margin-bottom:32px}
+    .hero__eyebrow-line{display:flex;align-items:center;justify-content:center;gap:16px;font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-dark)}
+    .hero__eyebrow-line span{opacity:.45;color:var(--navy)}
+    .hero__eyebrow-line::before,.hero__eyebrow-line::after{content:'';flex:0 0 32px;height:1px;background:var(--teal);opacity:.4}
     .hero__headline{margin-bottom:28px}
-    .hero__headline em{font-style:normal;position:relative;display:inline-block}
+    .hero__headline em{font-style:normal;position:relative;display:inline-block;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     .hero__headline em::after{content:'';position:absolute;bottom:-6px;left:0;right:0;height:5px;background:var(--grad-brand);border-radius:999px}
     .hero__sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--text-mid);max-width:580px;margin:0 auto 40px;line-height:1.65}
     .hero__sv{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border-mid);border-radius:var(--radius-pill);padding:8px 18px;font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:36px;box-shadow:var(--shadow-sm)}
@@ -306,7 +318,7 @@
 
     /* ── Marquee ─────────────────────────────────────── */
     .marquee-wrap{padding:0 24px;margin-bottom:20px}
-    .marquee-inner{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;padding:20px 0;-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 18%);mask-image:linear-gradient(to right,transparent 0%,#000 18%)}
+    .marquee-inner{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;padding:20px 0;-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 12%,#000 88%,transparent 100%);mask-image:linear-gradient(to right,transparent 0%,#000 12%,#000 88%,transparent 100%)}
     .marquee-track{display:flex;gap:40px;animation:marquee 28s linear infinite;white-space:nowrap}
     @keyframes marquee{to{transform:translateX(-50%)}}
     .marquee-item{font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);display:flex;align-items:center;gap:16px;flex-shrink:0}
@@ -335,12 +347,12 @@
     .scroll-sticky{position:sticky;top:0;height:100vh;background:var(--bg);display:flex;align-items:center;overflow:hidden}
     .scroll-sticky::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(26,63,92,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(26,63,92,.04) 1px,transparent 1px);background-size:80px 80px;pointer-events:none}
     .scroll-inner{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:center;width:100%;position:relative;z-index:1}
-    .scroll-text-area{position:relative;height:220px}
+    .scroll-text-area{position:relative;height:310px}
     .scroll-panel{position:absolute;top:0;left:0;opacity:0;transform:translateY(28px);pointer-events:none;transition:opacity .65s cubic-bezier(0.16,1,0.3,1),transform .65s cubic-bezier(0.16,1,0.3,1)}
     .scroll-panel.active{opacity:1;transform:none;pointer-events:auto}
     .scroll-panel h2{margin-bottom:14px;font-size:clamp(1.8rem,3.5vw,2.8rem)}
     .scroll-panel p{font-size:.98rem;max-width:420px}
-    .scroll-dots{display:flex;gap:8px;margin-top:28px}
+    .scroll-dots{display:flex;gap:8px;margin-top:20px}
     .s-dot{width:8px;height:8px;border-radius:50%;background:var(--border-mid);transition:all var(--t);cursor:pointer}
     .s-dot.active{background:var(--teal);width:26px;border-radius:999px}
     .scroll-device-stage{position:relative;height:480px;display:flex;align-items:center;justify-content:center}
@@ -379,16 +391,15 @@
 
     /* ── Services ────────────────────────────────────── */
     .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
-    .svc-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px 26px;transition:all var(--t);position:relative;overflow:hidden}
-    .svc-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(59,189,212,.04),transparent);opacity:0;transition:opacity var(--t)}
-    .svc-card:hover{border-color:rgba(59,189,212,.3);transform:translateY(-6px);box-shadow:var(--shadow-md);transition:all var(--t-slow)}
-    .svc-card:hover::after{opacity:1}
-    .svc-icon{width:48px;height:48px;border-radius:12px;background:rgba(59,189,212,.1);display:grid;place-items:center;margin-bottom:20px}
-    .svc-icon svg{width:22px;height:22px;stroke:var(--teal-dark);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-    .svc-card h3{color:var(--navy);margin-bottom:10px}
-    .svc-card p{font-size:.9rem;margin-bottom:20px}
-    .svc-link{font-size:.84rem;font-weight:700;color:var(--teal-dark);display:flex;align-items:center;gap:5px;transition:gap var(--t)}
-    .svc-link:hover{gap:10px;color:var(--teal)}
+    .svc-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);padding:32px 26px;transition:all var(--t);position:relative;overflow:hidden;backdrop-filter:blur(8px)}
+
+    .svc-card:hover{border-color:rgba(59,189,212,.35);transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,.35),0 0 0 1px rgba(59,189,212,.15);transition:all var(--t-slow)}
+    .svc-icon{width:48px;height:48px;border-radius:12px;background:rgba(59,189,212,.15);display:grid;place-items:center;margin-bottom:20px}
+    .svc-icon svg{width:22px;height:22px;stroke:var(--teal);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .svc-card h3{color:#fff;margin-bottom:10px}
+    .svc-card p{font-size:.9rem;margin-bottom:20px;color:rgba(255,255,255,.58)}
+    .svc-link{font-size:.84rem;font-weight:700;color:var(--teal);display:flex;align-items:center;gap:5px;transition:gap var(--t)}
+    .svc-link:hover{gap:10px;color:#fff}
 
     /* ── About ───────────────────────────────────────── */
     .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
@@ -422,9 +433,9 @@
     /* ── Clients ─────────────────────────────────────── */
     .clients-strip{padding:60px 0;background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
     .clients-lbl{text-align:center;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);margin-bottom:40px}
-    .clients-row{display:flex;gap:48px;justify-content:center;flex-wrap:wrap}
-    .client-name{font-family:var(--font-head);font-size:1rem;font-weight:900;color:var(--text-muted);opacity:.4;transition:all var(--t);letter-spacing:-.02em}
-    .client-name:hover{opacity:1;color:var(--navy)}
+    .clients-track{display:flex;gap:56px;animation:marquee 35s linear infinite;white-space:nowrap}
+    .client-name{font-family:var(--font-head);font-size:1rem;font-weight:900;color:var(--text-muted);opacity:.4;letter-spacing:-.02em;flex-shrink:0;transition:opacity var(--t)}
+    .client-name:hover{opacity:.8}
 
     /* ── Endorsement Carousel ────────────────────────── */
     .carousel-wrap{position:relative;margin-top:56px}
@@ -491,23 +502,26 @@
     .cta-inner__btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
     /* ── Footer ──────────────────────────────────────── */
-    .footer{background:#fff;border-top:1px solid var(--border);padding:64px 0 28px}
-    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:52px}
-    .footer-brand p{font-size:.88rem;max-width:260px;margin:14px 0 24px}
-    .footer-socials{display:flex;gap:10px}
-    .fsoc{width:36px;height:36px;border-radius:50%;border:1px solid var(--border-mid);display:grid;place-items:center;color:var(--text-muted);transition:all var(--t)}
-    .fsoc:hover{border-color:var(--teal);color:var(--teal-dark);background:rgba(59,189,212,.08)}
+    .footer{background:var(--navy-dark);color:rgba(255,255,255,.7);padding:80px 0 0}
+    .footer-hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding-bottom:56px;border-bottom:1px solid rgba(255,255,255,.08)}
+    .footer-hero img{height:125px;width:auto;margin-bottom:20px}
+    .footer-hero p{font-size:.95rem;max-width:480px;color:rgba(255,255,255,.5);line-height:1.7}
+    .footer-socials{display:flex;gap:10px;margin-top:28px}
+    .footer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;padding:52px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+    .footer-brand p{display:none}
+.fsoc{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.15);display:grid;place-items:center;color:rgba(255,255,255,.45);transition:all var(--t)}
+    .fsoc:hover{border-color:var(--teal);color:var(--teal);background:rgba(59,189,212,.1)}
     .fsoc svg{width:14px;height:14px;fill:currentColor}
-    .footer-col h4{font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:16px}
+    .footer-col h4{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:18px}
     .footer-links{list-style:none}
-    .footer-links li{margin-bottom:10px}
-    .footer-links a{font-size:.86rem;color:var(--text-muted);transition:color var(--t)}
-    .footer-links a:hover{color:var(--navy)}
-    .footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;align-items:center;justify-content:space-between}
-    .footer-bottom p{font-size:.8rem;color:var(--text-muted)}
+    .footer-links li{margin-bottom:11px}
+    .footer-links a{font-size:.88rem;color:rgba(255,255,255,.6);transition:color var(--t)}
+    .footer-links a:hover{color:#fff}
+    .footer-bottom{padding:24px 0;display:flex;align-items:center;justify-content:space-between}
+    .footer-bottom p{font-size:.78rem;color:rgba(255,255,255,.3)}
     .footer-bottom-links{display:flex;gap:20px;list-style:none}
-    .footer-bottom-links a{font-size:.8rem;color:var(--text-muted);transition:color var(--t)}
-    .footer-bottom-links a:hover{color:var(--navy)}
+    .footer-bottom-links a{font-size:.78rem;color:rgba(255,255,255,.3);transition:color var(--t)}
+    .footer-bottom-links a:hover{color:rgba(255,255,255,.7)}
 
     /* ── GSAP reveal ─────────────────────────────────── */
     .gfade{opacity:0;transform:translateY(28px)}
@@ -516,7 +530,7 @@
     @media(max-width:1024px){
       .thinktank__inner,.about-grid{grid-template-columns:1fr}
       .about-visual{display:none}
-      .footer-grid{grid-template-columns:1fr 1fr}
+      .footer-grid{grid-template-columns:1fr 1fr 1fr}
       .scroll-inner{grid-template-columns:1fr}
       .scroll-text-area{position:relative;height:auto}
       .scroll-panel{position:relative;display:none}
@@ -549,22 +563,17 @@
 </head>
 <body>
 
+<!-- ── Hero watermark — fixed, fades out under platform section -->
+<div class="hero-watermark" id="heroWatermark" aria-hidden="true">
+  <img src="assets/logo-icon-color.png" alt=""/>
+</div>
+
 <!-- ── Navbar ─────────────────────────────────────────── -->
 <div class="nav-outer" id="nav">
   <div class="container">
     <div class="nav-pill">
       <a href="#" class="logo-wrap" aria-label="MUSO VENTURES home">
-        <svg class="logo-mark" viewBox="0 0 80 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <linearGradient id="lg1" x1="0" y1="0" x2="80" y2="52" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#5CD0E6"/>
-              <stop offset="50%" stop-color="#3BBDD4"/>
-              <stop offset="100%" stop-color="#1A3F5C"/>
-            </linearGradient>
-          </defs>
-          <path d="M4 44 C4 44 12 8 20 8 C28 8 28 44 34 44 C40 44 44 8 52 8 C60 8 60 44 66 44 C72 44 76 20 76 20" stroke="url(#lg1)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
-        <span class="logo-wordmark">MUSO VENTURES</span>
+        <img src="assets/logo-color.png" alt="MUSO VENTURES" class="logo-img" style="height:65px;width:auto;mix-blend-mode:multiply;margin-top:1px"/>
       </a>
       <ul class="nav__links">
         <li><a href="#platform">Platform</a></li>
@@ -583,28 +592,11 @@
 
 <!-- ── Hero ───────────────────────────────────────────── -->
 <section class="hero" aria-label="Hero">
+  <div class="hero-edge-fade hero-edge-fade--left" aria-hidden="true"></div>
+  <div class="hero-edge-fade hero-edge-fade--right" aria-hidden="true"></div>
   <div class="hero__content" id="heroContent">
     <div class="hero__eyebrow" id="heroEye">
-      <div class="tag">Creative Business Solutions & Think Tank</div>
-    </div>
-
-    <!-- Logo mark large, centered -->
-    <div style="margin-bottom:32px" id="heroLogo">
-      <svg width="100" height="66" viewBox="0 0 80 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="lg2" x1="0" y1="0" x2="80" y2="52" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#5CD0E6"/>
-            <stop offset="50%" stop-color="#3BBDD4"/>
-            <stop offset="100%" stop-color="#1A3F5C"/>
-          </linearGradient>
-        </defs>
-        <path d="M4 44 C4 44 12 8 20 8 C28 8 28 44 34 44 C40 44 44 8 52 8 C60 8 60 44 66 44 C72 44 76 20 76 20" stroke="url(#lg2)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      </svg>
-    </div>
-
-    <div class="hero__sv" id="heroSV">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="stroke:var(--teal-dark)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      25+ Years Creating Digital Media in Silicon Valley
+      <div class="hero__eyebrow-line">Creative Business Solutions <span>·</span> Think Tank</div>
     </div>
 
     <h1 class="hero__headline" id="heroH1">
@@ -1030,12 +1022,12 @@
 </div>
 
 <!-- ── Services ───────────────────────────────────────── -->
-<section class="section" id="services" style="background:#fff" aria-label="Our services">
+<section class="section" id="services" style="background:var(--navy-dark);color:#fff" aria-label="Our services">
   <div class="container">
     <div style="max-width:600px">
-      <div class="tag">What We Do</div>
-      <h2 class="gfade">Creative Solutions<br/>Built to Perform</h2>
-      <p class="gfade">End-to-end creative business solutions that drive real, measurable results — from strategy to execution.</p>
+      <div class="tag" style="color:var(--teal);background:rgba(59,189,212,.12);border-color:rgba(59,189,212,.3)">What We Do</div>
+      <h2 class="gfade" style="color:#fff">Creative Solutions<br/>Built to Perform</h2>
+      <p class="gfade" style="color:rgba(255,255,255,.6)">End-to-end creative business solutions that drive real, measurable results — from strategy to execution.</p>
     </div>
     <div class="services-grid">
       <div class="svc-card gfade">
@@ -1081,15 +1073,47 @@
 <!-- ── Clients ────────────────────────────────────────── -->
 <div class="clients-strip" aria-label="Trusted clients">
   <div class="container">
-    <p class="clients-lbl">Trusted by industry leaders</p>
-    <div class="clients-row" role="list">
-      <span class="client-name" role="listitem">Nexaro</span>
-      <span class="client-name" role="listitem">Vaulted</span>
-      <span class="client-name" role="listitem">Stratex</span>
-      <span class="client-name" role="listitem">Lumify</span>
-      <span class="client-name" role="listitem">Orbis Co.</span>
-      <span class="client-name" role="listitem">Pinnacle</span>
-      <span class="client-name" role="listitem">Kairos</span>
+    <p class="clients-lbl">A career forged with iconic brands</p>
+    <div style="overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%);mask-image:linear-gradient(to right,transparent 0%,#000 10%,#000 90%,transparent 100%)">
+      <div class="clients-track" role="list">
+        <span class="client-name" role="listitem">Apple</span>
+        <span class="client-name" role="listitem">eBay</span>
+        <span class="client-name" role="listitem">Facebook</span>
+        <span class="client-name" role="listitem">McAfee</span>
+        <span class="client-name" role="listitem">Disney Resorts</span>
+        <span class="client-name" role="listitem">Capcom</span>
+        <span class="client-name" role="listitem">Aeria Games</span>
+        <span class="client-name" role="listitem">Clear Digital</span>
+        <span class="client-name" role="listitem">WebEnertia</span>
+        <span class="client-name" role="listitem">Veritone</span>
+        <span class="client-name" role="listitem">Cohesity</span>
+        <span class="client-name" role="listitem">SailPoint</span>
+        <span class="client-name" role="listitem">Socure</span>
+        <span class="client-name" role="listitem">Contentstack</span>
+        <span class="client-name" role="listitem">Coupa</span>
+        <span class="client-name" role="listitem">Riverbed</span>
+        <span class="client-name" role="listitem">Vantage Bank</span>
+        <span class="client-name" role="listitem">Viral Nation</span>
+        <!-- duplicate for seamless loop -->
+        <span class="client-name" role="listitem">Apple</span>
+        <span class="client-name" role="listitem">eBay</span>
+        <span class="client-name" role="listitem">Facebook</span>
+        <span class="client-name" role="listitem">McAfee</span>
+        <span class="client-name" role="listitem">Disney Resorts</span>
+        <span class="client-name" role="listitem">Capcom</span>
+        <span class="client-name" role="listitem">Aeria Games</span>
+        <span class="client-name" role="listitem">Clear Digital</span>
+        <span class="client-name" role="listitem">WebEnertia</span>
+        <span class="client-name" role="listitem">Veritone</span>
+        <span class="client-name" role="listitem">Cohesity</span>
+        <span class="client-name" role="listitem">SailPoint</span>
+        <span class="client-name" role="listitem">Socure</span>
+        <span class="client-name" role="listitem">Contentstack</span>
+        <span class="client-name" role="listitem">Coupa</span>
+        <span class="client-name" role="listitem">Riverbed</span>
+        <span class="client-name" role="listitem">Vantage Bank</span>
+        <span class="client-name" role="listitem">Viral Nation</span>
+      </div>
     </div>
   </div>
 </div>
@@ -1280,29 +1304,26 @@
 <!-- ── Footer ─────────────────────────────────────────── -->
 <footer class="footer" aria-label="Site footer">
   <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="#" class="logo-wrap" aria-label="MUSO VENTURES home">
-          <svg class="logo-mark" viewBox="0 0 80 52" fill="none">
-            <defs><linearGradient id="lg3" x1="0" y1="0" x2="80" y2="52" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#5CD0E6"/><stop offset="50%" stop-color="#3BBDD4"/><stop offset="100%" stop-color="#1A3F5C"/></linearGradient></defs>
-            <path d="M4 44 C4 44 12 8 20 8 C28 8 28 44 34 44 C40 44 44 8 52 8 C60 8 60 44 66 44 C72 44 76 20 76 20" stroke="url(#lg3)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span class="logo-wordmark">MUSO VENTURES</span>
-        </a>
-        <p>Creative business solutions & think tank. 25+ years pioneering digital media in Silicon Valley.</p>
-        <div class="footer-socials" aria-label="Social media links">
-          <a href="#" class="fsoc" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-          <a href="#" class="fsoc" aria-label="Twitter/X"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4"/></svg></a>
-          <a href="#" class="fsoc" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
-        </div>
+
+    <!-- Centered brand block -->
+    <div class="footer-hero">
+      <img src="assets/logo-color.png" alt="MUSO VENTURES" style="filter:brightness(0) invert(1);opacity:.9"/>
+      <p>Creative business solutions & think tank — 25+ years pioneering digital ventures in Silicon Valley.</p>
+      <div class="footer-socials" aria-label="Social media links">
+        <a href="#" class="fsoc" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="#" class="fsoc" aria-label="Twitter/X"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4"/></svg></a>
+        <a href="#" class="fsoc" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
       </div>
+    </div>
+
+    <!-- 3-column links -->
+    <div class="footer-grid">
       <div class="footer-col">
         <h4>Services</h4>
         <ul class="footer-links">
           <li><a href="#services">Brand Strategy</a></li>
           <li><a href="#services">Digital Transformation</a></li>
           <li><a href="#services">Growth Marketing</a></li>
-          <li><a href="#services">Business Consulting</a></li>
           <li><a href="#services">Product Innovation</a></li>
           <li><a href="#services">Experience Design</a></li>
         </ul>
@@ -1318,22 +1339,25 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Contact</h4>
+        <h4>Get in Touch</h4>
         <ul class="footer-links">
           <li><a href="mailto:hello@musoventures.com">hello@musoventures.com</a></li>
-          <li><a href="tel:+000000000">+000 000 0000</a></li>
           <li><a href="#contact">Schedule a Call</a></li>
+          <li><a href="#contact">Start a Project</a></li>
           <li><a href="#contact">Partner With Us</a></li>
         </ul>
       </div>
     </div>
+
+    <!-- Bottom bar -->
     <div class="footer-bottom">
-      <p>© 2026 MUSO VENTURES. All rights reserved.</p>
+      <p>© 2026 MUSO VENTURES LLC. All rights reserved.</p>
       <ul class="footer-bottom-links">
         <li><a href="#">Privacy Policy</a></li>
         <li><a href="#">Terms of Service</a></li>
       </ul>
     </div>
+
   </div>
 </footer>
 
@@ -1425,7 +1449,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Hero entrance — staggered with expo easing for a silky cascade
 gsap.from('#heroEye',  {opacity:0,y:18,duration:.9, delay:.25,ease:'expo.out'});
-gsap.from('#heroLogo', {opacity:0,y:14,duration:.85,delay:.38,ease:'expo.out'});
+// Watermark: fade in on load, lock in place, scrub to 0 as platform section arrives
+gsap.fromTo('#heroWatermark img',{opacity:0,scale:.94},{opacity:.10,scale:1,duration:1.6,delay:.2,ease:'expo.out'});
+gsap.to('#heroWatermark',{
+  opacity:0,
+  ease:'none',
+  scrollTrigger:{
+    trigger:'#platform',
+    start:'top 90%',
+    end:'top 15%',
+    scrub:1
+  }
+});
 gsap.from('#heroSV',   {opacity:0,y:14,duration:.85,delay:.5, ease:'expo.out'});
 gsap.from('#heroH1',   {opacity:0,y:44,duration:1.2,delay:.62,ease:'expo.out'});
 gsap.from('#heroSub',  {opacity:0,y:22,duration:1,  delay:.82,ease:'expo.out'});
