@@ -87,17 +87,19 @@
     .section--navy p{color:rgba(255,255,255,.65)}
 
     /* ── Buttons ─────────────────────────────────────── */
-    .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-head);font-weight:700;font-size:.95rem;padding:14px 28px;border-radius:var(--radius-pill);border:none;cursor:pointer;transition:all var(--t);letter-spacing:-.01em}
+    .btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-head);font-weight:700;font-size:.95rem;padding:14px 28px;border-radius:var(--radius-pill);border:none;cursor:pointer;transition:transform var(--t-spring),box-shadow var(--t-spring),background var(--t),border-color var(--t),color var(--t);letter-spacing:-.01em}
     .btn--primary{background:var(--navy);color:#fff}
-    .btn--primary:hover{background:var(--navy-light);transform:translateY(-2px);box-shadow:var(--shadow-md)}
+    .btn--primary:hover{background:var(--navy-light);transform:translateY(-3px) scale(1.02);box-shadow:0 10px 32px rgba(26,63,92,.28)}
     .btn--teal{background:var(--grad-brand);color:#fff}
-    .btn--teal:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(59,189,212,.35)}
+    .btn--teal:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 10px 32px rgba(59,189,212,.4)}
     .btn--outline{background:transparent;color:var(--navy);border:1.5px solid var(--border-mid)}
-    .btn--outline:hover{border-color:var(--teal);color:var(--teal-dark);transform:translateY(-2px)}
+    .btn--outline:hover{border-color:var(--teal);color:var(--teal-dark);transform:translateY(-3px) scale(1.02);box-shadow:0 6px 20px rgba(59,189,212,.12)}
     .btn--ghost-white{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
-    .btn--ghost-white:hover{background:rgba(255,255,255,.18);transform:translateY(-2px)}
+    .btn--ghost-white:hover{background:rgba(255,255,255,.2);transform:translateY(-3px) scale(1.02);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+    .btn:active{transform:translateY(0) scale(.98) !important;transition:transform 80ms ease}
     .btn:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
-    .btn svg{flex-shrink:0}
+    .btn svg{flex-shrink:0;transition:transform var(--t-spring)}
+    .btn:hover svg{transform:translateX(3px)}
 
     /* ── Logo SVG ────────────────────────────────────── */
     .logo-mark{width:44px;height:40px;display:inline-block;vertical-align:middle}
@@ -134,8 +136,13 @@
     .hero__eyebrow-line span{opacity:.45;color:var(--navy)}
     .hero__eyebrow-line::before,.hero__eyebrow-line::after{content:'';flex:0 0 32px;height:1px;background:var(--teal);opacity:.4}
     .hero__headline{margin-bottom:28px}
-    .hero__headline em{font-style:normal;position:relative;display:inline-block;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .hero__headline em::after{content:'';position:absolute;bottom:-6px;left:0;right:0;height:5px;background:var(--grad-brand);border-radius:999px}
+    .hero__headline em{font-style:normal;position:relative;display:inline-block}
+    .venture-solid{color:inherit}
+    .venture-grad{position:absolute;left:0;top:0;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;pointer-events:none;opacity:0;transition:opacity 0.55s ease-in-out}
+    .hero__headline em.reveal .venture-grad{opacity:1}
+    .hero__headline em::after{content:'';position:absolute;bottom:-6px;left:0;width:0;height:5px;background:var(--grad-brand);border-radius:999px;transition:width 0.55s ease-in-out}
+    .hero__headline em.reveal::after{width:100%}
+    .hero__headline em.reveal .venture-grad{-webkit-mask-position:0% 0;mask-position:0% 0}
     .hero__sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--text-mid);max-width:580px;margin:0 auto 40px;line-height:1.65}
     .hero__sv{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border-mid);border-radius:var(--radius-pill);padding:8px 18px;font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:36px;box-shadow:var(--shadow-sm)}
     .hero__sv svg{width:16px;height:16px;flex-shrink:0}
@@ -509,9 +516,12 @@
     .footer-socials{display:flex;gap:10px;margin-top:28px}
     .footer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;padding:52px 0;border-bottom:1px solid rgba(255,255,255,.08)}
     .footer-brand p{display:none}
-.fsoc{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.15);display:grid;place-items:center;color:rgba(255,255,255,.45);transition:all var(--t)}
-    .fsoc:hover{border-color:var(--teal);color:var(--teal);background:rgba(59,189,212,.1)}
+.fsoc{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.15);display:grid;place-items:center;color:rgba(255,255,255,.45);transition:transform var(--t-spring),border-color var(--t),color var(--t),background var(--t)}
+    .fsoc:hover{border-color:var(--teal);color:var(--teal);background:rgba(59,189,212,.1);transform:scale(1.18) translateY(-2px)}
+    .fsoc:active{transform:scale(.95);transition:transform 80ms ease}
     .fsoc svg{width:14px;height:14px;fill:currentColor}
+    .svc-icon{transition:transform var(--t-spring)}
+    .svc-card:hover .svc-icon{transform:scale(1.22)}
     .footer-col h4{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:18px}
     .footer-links{list-style:none}
     .footer-links li{margin-bottom:11px}
@@ -600,7 +610,7 @@
     </div>
 
     <h1 class="hero__headline" id="heroH1">
-      Where Vision<br/>Meets <em>Venture</em>
+      Where Vision<br/>Meets <em id="ventureWord"><span class="venture-solid">Venture</span><span class="venture-grad" aria-hidden="true">Venture</span></em>
     </h1>
 
     <p class="hero__sub" id="heroSub">
@@ -1449,6 +1459,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Hero entrance — staggered with expo easing for a silky cascade
 gsap.from('#heroEye',  {opacity:0,y:18,duration:.9, delay:.25,ease:'expo.out'});
+// Venture word: underline draws in, then text crossfades to gradient
+setTimeout(()=>{ document.getElementById('ventureWord').classList.add('reveal'); }, 1500);
 // Watermark: fade in on load, lock in place, scrub to 0 as platform section arrives
 gsap.fromTo('#heroWatermark img',{opacity:0,scale:.94},{opacity:.10,scale:1,duration:1.6,delay:.2,ease:'expo.out'});
 gsap.to('#heroWatermark',{
