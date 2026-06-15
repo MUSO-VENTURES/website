@@ -1567,7 +1567,8 @@ gsap.utils.toArray('.gfade').forEach(el=>{
         setTimeout(()=>step.classList.add('bounce'),60);
         if(i<4){ setTimeout(()=>activate(i+1),900); }
       };
-      activate(1);
+      // 500ms delay after section enters view before starting sequence
+      setTimeout(()=>activate(1), 500);
     }
   },{threshold:0.3});
   obs.observe(document.getElementById('processGrid'));
