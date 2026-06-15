@@ -1462,44 +1462,64 @@ function buildServiceCards() {
 }
 
 // ── Phone auto-format ─────────────────────────────────
+function formatUS(val) {
+  const d = val.replace(/\D/g,'').substring(0,10);
+  if (d.length < 4)  return d;
+  if (d.length < 7)  return `(${d.slice(0,3)}) ${d.slice(3)}`;
+  return `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
+}
+
+// Attach US formatting to a plain phone input
+function attachPhoneFormat(input) {
+  if (!input) return;
+  input.addEventListener('input', e => {
+    const pos = e.target.selectionStart;
+    const prev = e.target.value;
+    const formatted = formatUS(prev);
+    e.target.value = formatted;
+    const diff = formatted.length - prev.length;
+    e.target.setSelectionRange(pos + diff, pos + diff);
+  });
+}
+
+// Business phone with country code dropdown
 (()=>{
   const input = document.getElementById('cf_phone');
   const cc    = document.getElementById('cf_phone_cc');
   if (!input) return;
 
-  // US/CA format: (555) 000-0000 — international: raw digits with spaces
-  function formatUS(val) {
-    const d = val.replace(/\D/g,'').substring(0,10);
-    if (d.length < 4)  return d;
-    if (d.length < 7)  return `(${d.slice(0,3)}) ${d.slice(3)}`;
-    return `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
-  }
-  function formatIntl(val) {
-    return val.replace(/[^\d\s\-\+\(\)]/g,'');
-  }
-
-  function isNorthAmerica() {
-    return cc.value === '+1' || cc.value === '+1-CA';
-  }
+  function formatIntl(val) { return val.replace(/[^\d\s\-\+\(\)]/g,''); }
+  function isNorthAmerica() { return cc.value === '+1' || cc.value === '+1-CA'; }
 
   input.addEventListener('input', e => {
-    const pos  = e.target.selectionStart;
+    const pos = e.target.selectionStart;
     const prev = e.target.value;
     const formatted = isNorthAmerica() ? formatUS(prev) : formatIntl(prev);
     e.target.value = formatted;
-    // Restore caret roughly
     const diff = formatted.length - prev.length;
     e.target.setSelectionRange(pos + diff, pos + diff);
   });
 
   cc.addEventListener('change', () => {
-    // Reformat on country change
     input.value = isNorthAmerica()
       ? formatUS(input.value)
       : input.value.replace(/[^\d\s\-\+\(\)]/g,'');
     input.placeholder = isNorthAmerica() ? '(555) 000-0000' : 'Phone number';
   });
 })();
+
+// All other plain phone fields
+['cf_p_phone','cf_s_phone'].forEach(id => attachPhoneFormat(document.getElementById(id)));
+
+// Extra contact phone fields (added dynamically — patch after insertion)
+const _origAddExtra = window.addExtraContact;
+window.addExtraContact = function(...args) {
+  if (_origAddExtra) _origAddExtra.apply(this, args);
+  // Find the newest ec_phone_N and attach formatter
+  let n = 1;
+  while (document.getElementById(`ec_phone_${n}`)) n++;
+  attachPhoneFormat(document.getElementById(`ec_phone_${n-1}`));
+};
 
 // ── Interactions ──────────────────────────────────────
 function pick(id, btn, trigger) {
