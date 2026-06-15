@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MUSO VENTURES — Client Discovery</title>
+<title>MUSO VENTURES: Client Discovery</title>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -968,7 +968,7 @@ body::before {
   <div class="hero">
     <div class="hero-eyebrow">New Client Intake &mdash; Confidential</div>
     <h1 class="hero-title">Let's understand<br><em id="heroWord">your business.</em></h1>
-    <p class="hero-body">This discovery form helps us build a clear picture of where you are today, where you want to go, and how we can best support your goals. Take your time — there are no wrong answers.</p>
+    <p class="hero-body">This discovery form helps us build a clear picture of where you are today, where you want to go, and how we can best support your goals. Take your time; there are no wrong answers.</p>
     <div class="progress-row">
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
       <div class="progress-stat" id="progressStat">0 of 0 answered</div>
@@ -1167,8 +1167,8 @@ body::before {
       <div class="q-meta"><span class="q-num">OPTIONAL</span></div>
       <div class="q-text">Would you like to break down your primary services and average ticket value per customer visit?</div>
       <div class="choices">
-        <button class="choice-btn" onclick="openServices(this, true)">Yes — let's detail it</button>
-        <button class="choice-btn" onclick="openServices(this, false)">No — skip this</button>
+        <button class="choice-btn" onclick="openServices(this, true)">Yes, let's detail it</button>
+        <button class="choice-btn" onclick="openServices(this, false)">No, skip this</button>
       </div>
       <div class="service-panel" id="servicePanel">
         <div class="service-intro">For each relevant category, select the job types you offer and the typical dollar range per visit.</div>
@@ -1188,7 +1188,7 @@ body::before {
     <div id="printHead">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid #1a1a1a;">
         <div>
-          <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#888;margin-bottom:4px;font-family:monospace;">MUSO VENTURES — Client Discovery</div>
+          <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#888;margin-bottom:4px;font-family:monospace;">MUSO VENTURES: Client Discovery</div>
           <div style="font-size:34px;font-weight:400;color:#1a1a1a;line-height:1;font-family:Georgia,serif;" id="printName">Discovery</div>
           <div style="font-size:11px;color:#888;margin-top:4px;font-family:monospace;" id="printDate"></div>
         </div>
@@ -1238,7 +1238,7 @@ const sections = [
       },
       {
         text: "How would you describe your current customer volume?",
-        choices: ["Very low — just getting started", "Moderate and steady", "Busy and at near-capacity", "Seasonal or highly variable", "Growing fast, hard to keep up"]
+        choices: ["Very low, just getting started", "Moderate and steady", "Busy and at near-capacity", "Seasonal or highly variable", "Growing fast, hard to keep up"]
       },
       {
         text: "What's your primary revenue model?",
@@ -1252,7 +1252,7 @@ const sections = [
     questions: [
       {
         text: "How current and accurate is your website?",
-        choices: ["No website", "Has one — very outdated", "Has one — somewhat current", "Has one — recently updated", "Has one — actively maintained"]
+        choices: ["No website", "Has one, very outdated", "Has one, somewhat current", "Has one, recently updated", "Has one, actively maintained"]
       },
       {
         text: "How do most new customers find you today?",
@@ -1278,11 +1278,11 @@ const sections = [
       },
       {
         text: "Does your online presence reflect your actual quality of work?",
-        choices: ["Definitely not — big gap", "Probably not", "Somewhat", "Pretty well", "Yes, absolutely"]
+        choices: ["Definitely not, big gap", "Probably not", "Somewhat", "Pretty well", "Yes, absolutely"]
       },
       {
         text: "Can customers book, request quotes, or contact you online?",
-        choices: ["No — all calls or walk-ins", "Basic contact form only", "Partial online capability", "Fully online — works well"]
+        choices: ["No, all calls or walk-ins", "Basic contact form only", "Partial online capability", "Fully online, works well"]
       },
       {
         text: "How do you currently handle reviews and reputation?",
@@ -1322,18 +1322,18 @@ const sections = [
       },
       {
         text: "Who currently manages your marketing or tech?",
-        choices: ["Just me — no help", "An employee handles it", "An outside vendor or agency", "Mix of staff and vendors", "Essentially nothing managed"],
+        choices: ["Just me, no help", "An employee handles it", "An outside vendor or agency", "Mix of staff and vendors", "Essentially nothing managed"],
         trigger: "vendor-q",
         triggerOn: ["An employee handles it", "An outside vendor or agency", "Mix of staff and vendors"]
       },
       {
         text: "Is that marketing or tech relationship working well?",
-        choices: ["Yes — happy with it", "It's okay, could be better", "Not really — looking for alternatives", "We recently ended that relationship"],
+        choices: ["Yes, happy with it", "It's okay, could be better", "Not really — looking for alternatives", "We recently ended that relationship"],
         conditional: "vendor-q"
       },
       {
         text: "Have you worked with a web or marketing agency before?",
-        choices: ["Never", "Yes — poor experience", "Yes — mixed experience", "Yes — great experience"],
+        choices: ["Never", "Yes, poor experience", "Yes, mixed experience", "Yes, great experience"],
         conditional: "vendor-q"
       },
       {
@@ -1352,7 +1352,7 @@ const sections = [
       },
       {
         text: "Do you have a budget range in mind for this project?",
-        choices: ["Not yet — need a proposal first", "Under $1,000", "$1,000 – $2,500", "$2,500 – $5,000", "$5,000 – $10,000", "$10,000+", "Open to the right solution"]
+        choices: ["Not yet, need a proposal first", "Under $1,000", "$1,000 – $2,500", "$2,500 – $5,000", "$5,000 – $10,000", "$10,000+", "Open to the right solution"]
       },
       {
         text: "Is there a specific deadline or event driving this project?",
