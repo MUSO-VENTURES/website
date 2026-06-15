@@ -440,9 +440,6 @@
     .p-step h3{color:var(--navy);margin-bottom:9px;font-size:.98rem}
     .p-step p{font-size:.86rem}
     /* Segmented connector line */
-    .proc-connector{position:absolute;top:36px;left:0;width:100%;pointer-events:none;z-index:0}
-    .proc-seg{position:absolute;top:0;height:2px;background:var(--teal);border-radius:999px;width:0;transition:width .9s ease;opacity:.5}
-    .proc-seg.drawn{width:100%}
 
     /* ── Clients ─────────────────────────────────────── */
     .clients-strip{padding:60px 0;background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -1180,11 +1177,6 @@
       <p class="gfade">Four phases refined across 25+ years and 200+ ventures — from insight to impact.</p>
     </div>
     <div class="process-grid" id="processGrid">
-      <div class="proc-connector" aria-hidden="true">
-        <div class="proc-seg" id="pseg1"></div>
-        <div class="proc-seg" id="pseg2"></div>
-        <div class="proc-seg" id="pseg3"></div>
-      </div>
       <div class="p-step" id="pstep1"><div class="p-step__num">01</div><h3>Discover</h3><p>Deep-dive into your business, market, and audience to uncover the insights that shape strategy.</p></div>
       <div class="p-step" id="pstep2"><div class="p-step__num">02</div><h3>Strategise</h3><p>Build a clear, actionable roadmap — with creative vision and commercial logic.</p></div>
       <div class="p-step" id="pstep3"><div class="p-step__num">03</div><h3>Create</h3><p>Design, build, and craft solutions with precision — creativity meets world-class execution.</p></div>
@@ -1507,30 +1499,12 @@ gsap.utils.toArray('.gfade').forEach(el=>{
     if(e.isIntersecting && !fired){
       fired=true; obs.disconnect();
 
-      // Position each connector segment flush against the disc edges
-      const grid=document.getElementById('processGrid');
-      const gridRect=grid.getBoundingClientRect();
-      for(let i=1;i<=3;i++){
-        const aRect=document.querySelector('#pstep'+i+' .p-step__num').getBoundingClientRect();
-        const bRect=document.querySelector('#pstep'+(i+1)+' .p-step__num').getBoundingClientRect();
-        const seg=document.getElementById('pseg'+i);
-        const segLeft=aRect.right-gridRect.left;
-        const segMax=bRect.left-aRect.right;
-        seg.style.left=segLeft+'px';
-        seg.style.maxWidth=segMax+'px';
-      }
-
-      // Sequential activation: step lights up, brief pause to read, then line draws, then next step
+      // Sequential activation: step lights up with bounce, then next step after pause
       const activate=(i)=>{
         const step=document.getElementById('pstep'+i);
         step.classList.add('active');
         setTimeout(()=>step.classList.add('bounce'),60);
-        if(i<4){
-          // Wait 600ms after step activates before drawing line (let user read)
-          setTimeout(()=>{ document.getElementById('pseg'+i).style.width='100%'; },600);
-          // Next step activates exactly when line finishes: 600ms pause + 900ms line draw
-          setTimeout(()=>activate(i+1),1500);
-        }
+        if(i<4){ setTimeout(()=>activate(i+1),900); }
       };
       activate(1);
     }
