@@ -131,6 +131,10 @@ body::before {
 }
 .hw-solid {
   color: var(--text);
+  transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1);
+}
+.hero-title em.reveal .hw-solid {
+  opacity: 0;
 }
 .hw-grad {
   position: absolute;
@@ -141,7 +145,7 @@ body::before {
   background-clip: text;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.55s ease-in-out;
+  transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1);
 }
 .hero-title em.reveal .hw-grad {
   opacity: 1;
