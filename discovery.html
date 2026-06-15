@@ -240,6 +240,11 @@ body::before {
 .finput::placeholder, .ftextarea::placeholder { color: #bbb; }
 .finput:focus, .fselect:focus, .ftextarea:focus { border-color: var(--teal); background: #fff; }
 .finput.err { border-color: var(--red); background: rgba(74,175,196,0.04); }
+/* Phone field with country code */
+.phone-wrap { display:flex; gap:8px; align-items:stretch; }
+.phone-cc { background:var(--surface); border:1px solid var(--border); border-radius:12px; color:var(--text); font-family:var(--font); font-size:13px; padding:10px 8px; outline:none; cursor:pointer; flex-shrink:0; width:110px; transition:border-color .2s,background .2s; }
+.phone-cc:focus { border-color:var(--teal); background:#fff; }
+.phone-wrap .phone-num { flex:1; width:auto; }
 
 .ferr {
   font-family: var(--font);
@@ -939,7 +944,36 @@ body::before {
     <div class="g2">
       <div class="field">
         <label class="flabel">Business Phone <span class="req">*</span></label>
-        <input class="finput" id="cf_phone" type="tel" placeholder="(555) 000-0000" required>
+        <div class="phone-wrap" id="phone-wrap">
+          <select class="phone-cc" id="cf_phone_cc" aria-label="Country code">
+            <option value="+1">🇺🇸 +1</option>
+            <option value="+1-CA">🇨🇦 +1</option>
+            <option value="+44">🇬🇧 +44</option>
+            <option value="+61">🇦🇺 +61</option>
+            <option value="+64">🇳🇿 +64</option>
+            <option value="+353">🇮🇪 +353</option>
+            <option value="+33">🇫🇷 +33</option>
+            <option value="+49">🇩🇪 +49</option>
+            <option value="+34">🇪🇸 +34</option>
+            <option value="+39">🇮🇹 +39</option>
+            <option value="+31">🇳🇱 +31</option>
+            <option value="+46">🇸🇪 +46</option>
+            <option value="+47">🇳🇴 +47</option>
+            <option value="+45">🇩🇰 +45</option>
+            <option value="+41">🇨🇭 +41</option>
+            <option value="+81">🇯🇵 +81</option>
+            <option value="+82">🇰🇷 +82</option>
+            <option value="+86">🇨🇳 +86</option>
+            <option value="+91">🇮🇳 +91</option>
+            <option value="+65">🇸🇬 +65</option>
+            <option value="+971">🇦🇪 +971</option>
+            <option value="+55">🇧🇷 +55</option>
+            <option value="+52">🇲🇽 +52</option>
+            <option value="+54">🇦🇷 +54</option>
+            <option value="+27">🇿🇦 +27</option>
+          </select>
+          <input class="finput phone-num" id="cf_phone" type="tel" placeholder="(555) 000-0000" required autocomplete="tel">
+        </div>
         <span class="ferr" id="err_phone">Phone number is required.</span>
       </div>
       <div class="field">
@@ -1387,6 +1421,46 @@ function buildServiceCards() {
   });
 }
 
+// ── Phone auto-format ─────────────────────────────────
+(()=>{
+  const input = document.getElementById('cf_phone');
+  const cc    = document.getElementById('cf_phone_cc');
+  if (!input) return;
+
+  // US/CA format: (555) 000-0000 — international: raw digits with spaces
+  function formatUS(val) {
+    const d = val.replace(/\D/g,'').substring(0,10);
+    if (d.length < 4)  return d;
+    if (d.length < 7)  return `(${d.slice(0,3)}) ${d.slice(3)}`;
+    return `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
+  }
+  function formatIntl(val) {
+    return val.replace(/[^\d\s\-\+\(\)]/g,'');
+  }
+
+  function isNorthAmerica() {
+    return cc.value === '+1' || cc.value === '+1-CA';
+  }
+
+  input.addEventListener('input', e => {
+    const pos  = e.target.selectionStart;
+    const prev = e.target.value;
+    const formatted = isNorthAmerica() ? formatUS(prev) : formatIntl(prev);
+    e.target.value = formatted;
+    // Restore caret roughly
+    const diff = formatted.length - prev.length;
+    e.target.setSelectionRange(pos + diff, pos + diff);
+  });
+
+  cc.addEventListener('change', () => {
+    // Reformat on country change
+    input.value = isNorthAmerica()
+      ? formatUS(input.value)
+      : input.value.replace(/[^\d\s\-\+\(\)]/g,'');
+    input.placeholder = isNorthAmerica() ? '(555) 000-0000' : 'Phone number';
+  });
+})();
+
 // ── Interactions ──────────────────────────────────────
 function pick(id, btn, trigger) {
   document.getElementById(`ch_${id}`).querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
@@ -1529,6 +1603,7 @@ function collectContactData() {
   return {
     clientName:  document.getElementById('clientName').value.trim(),
     phone:       document.getElementById('cf_phone').value.trim(),
+    phoneCC:     document.getElementById('cf_phone_cc')?.value || '+1',
     email:       document.getElementById('cf_email').value.trim(),
     address:     document.getElementById('cf_address').value.trim(),
     website:     document.getElementById('cf_website').value.trim(),
@@ -1676,7 +1751,7 @@ async function sendToFormspree(c, services) {
     business_name:    c.clientName,
     industry:         c.industry,
     years:            c.years,
-    phone:            c.phone,
+    phone:            c.phoneCC + ' ' + c.phone,
     email:            c.email,
     location:         c.address,
     website:          c.website,
