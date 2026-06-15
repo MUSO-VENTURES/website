@@ -924,6 +924,15 @@ body::before {
   .sum-item { grid-template-columns: 1fr; }
   .sum-q { padding-bottom: 0; }
   .contact-sum-row { grid-template-columns: 1fr; }
+
+  /* Contact cards — prevent overflow on narrow screens */
+  .contact-card { padding: 16px 14px; overflow: hidden; box-sizing: border-box; }
+  .finput, .ftextarea, .phone-wrap { max-width: 100%; box-sizing: border-box; }
+  .phone-wrap { width: 100%; }
+
+  /* Brand bar — hide tagline, keep logo + back button on one row */
+  .brand-tagline { display: none; }
+  .brand-bar img { height: 52px; }
 }
 
 @media (pointer: coarse) {
