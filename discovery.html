@@ -1063,7 +1063,12 @@ body::before {
         </div>
         <div class="field">
           <label class="flabel">Direct Phone <span class="req">*</span></label>
-          <input class="finput" id="cf_p_phone" type="tel" placeholder="(555) 000-0000">
+          <div class="phone-wrap">
+            <select class="phone-cc" id="cf_p_phone_cc" aria-label="Country code">
+              <option value="+1">🇺🇸 +1</option><option value="+1-CA">🇨🇦 +1</option><option value="+44">🇬🇧 +44</option><option value="+61">🇦🇺 +61</option><option value="+64">🇳🇿 +64</option><option value="+353">🇮🇪 +353</option><option value="+33">🇫🇷 +33</option><option value="+49">🇩🇪 +49</option><option value="+34">🇪🇸 +34</option><option value="+39">🇮🇹 +39</option><option value="+31">🇳🇱 +31</option><option value="+46">🇸🇪 +46</option><option value="+47">🇳🇴 +47</option><option value="+45">🇩🇰 +45</option><option value="+41">🇨🇭 +41</option><option value="+81">🇯🇵 +81</option><option value="+82">🇰🇷 +82</option><option value="+86">🇨🇳 +86</option><option value="+91">🇮🇳 +91</option><option value="+65">🇸🇬 +65</option><option value="+971">🇦🇪 +971</option><option value="+55">🇧🇷 +55</option><option value="+52">🇲🇽 +52</option><option value="+54">🇦🇷 +54</option><option value="+27">🇿🇦 +27</option>
+            </select>
+            <input class="finput phone-num" id="cf_p_phone" type="tel" placeholder="(555) 000-0000" autocomplete="tel">
+          </div>
           <span class="ferr" id="err_p_phone">Required.</span>
         </div>
         <div class="field">
@@ -1105,7 +1110,12 @@ body::before {
         </div>
         <div class="field">
           <label class="flabel">Direct Phone</label>
-          <input class="finput" id="cf_s_phone" type="tel" placeholder="(555) 000-0000">
+          <div class="phone-wrap">
+            <select class="phone-cc" id="cf_s_phone_cc" aria-label="Country code">
+              <option value="+1">🇺🇸 +1</option><option value="+1-CA">🇨🇦 +1</option><option value="+44">🇬🇧 +44</option><option value="+61">🇦🇺 +61</option><option value="+64">🇳🇿 +64</option><option value="+353">🇮🇪 +353</option><option value="+33">🇫🇷 +33</option><option value="+49">🇩🇪 +49</option><option value="+34">🇪🇸 +34</option><option value="+39">🇮🇹 +39</option><option value="+31">🇳🇱 +31</option><option value="+46">🇸🇪 +46</option><option value="+47">🇳🇴 +47</option><option value="+45">🇩🇰 +45</option><option value="+41">🇨🇭 +41</option><option value="+81">🇯🇵 +81</option><option value="+82">🇰🇷 +82</option><option value="+86">🇨🇳 +86</option><option value="+91">🇮🇳 +91</option><option value="+65">🇸🇬 +65</option><option value="+971">🇦🇪 +971</option><option value="+55">🇧🇷 +55</option><option value="+52">🇲🇽 +52</option><option value="+54">🇦🇷 +54</option><option value="+27">🇿🇦 +27</option>
+            </select>
+            <input class="finput phone-num" id="cf_s_phone" type="tel" placeholder="(555) 000-0000" autocomplete="tel">
+          </div>
           <span class="ferr" id="err_s_phone">Required if filling this card.</span>
         </div>
         <div class="field">
@@ -1462,64 +1472,40 @@ function buildServiceCards() {
 }
 
 // ── Phone auto-format ─────────────────────────────────
+const CC_OPTIONS = `<option value="+1">🇺🇸 +1</option><option value="+1-CA">🇨🇦 +1</option><option value="+44">🇬🇧 +44</option><option value="+61">🇦🇺 +61</option><option value="+64">🇳🇿 +64</option><option value="+353">🇮🇪 +353</option><option value="+33">🇫🇷 +33</option><option value="+49">🇩🇪 +49</option><option value="+34">🇪🇸 +34</option><option value="+39">🇮🇹 +39</option><option value="+31">🇳🇱 +31</option><option value="+46">🇸🇪 +46</option><option value="+47">🇳🇴 +47</option><option value="+45">🇩🇰 +45</option><option value="+41">🇨🇭 +41</option><option value="+81">🇯🇵 +81</option><option value="+82">🇰🇷 +82</option><option value="+86">🇨🇳 +86</option><option value="+91">🇮🇳 +91</option><option value="+65">🇸🇬 +65</option><option value="+971">🇦🇪 +971</option><option value="+55">🇧🇷 +55</option><option value="+52">🇲🇽 +52</option><option value="+54">🇦🇷 +54</option><option value="+27">🇿🇦 +27</option>`;
+
 function formatUS(val) {
   const d = val.replace(/\D/g,'').substring(0,10);
   if (d.length < 4)  return d;
   if (d.length < 7)  return `(${d.slice(0,3)}) ${d.slice(3)}`;
   return `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
 }
+function formatIntl(val) { return val.replace(/[^\d\s\-\+\(\)]/g,''); }
 
-// Attach US formatting to a plain phone input
-function attachPhoneFormat(input) {
+// Wire a phone input + its cc select together
+function attachPhoneWithCC(inputId, ccId) {
+  const input = document.getElementById(inputId);
+  const cc    = document.getElementById(ccId);
   if (!input) return;
+  const isNA = () => !cc || cc.value === '+1' || cc.value === '+1-CA';
   input.addEventListener('input', e => {
     const pos = e.target.selectionStart;
     const prev = e.target.value;
-    const formatted = formatUS(prev);
-    e.target.value = formatted;
-    const diff = formatted.length - prev.length;
+    const fmt = isNA() ? formatUS(prev) : formatIntl(prev);
+    e.target.value = fmt;
+    const diff = fmt.length - prev.length;
     e.target.setSelectionRange(pos + diff, pos + diff);
+  });
+  if (cc) cc.addEventListener('change', () => {
+    input.value = isNA() ? formatUS(input.value) : formatIntl(input.value);
+    input.placeholder = isNA() ? '(555) 000-0000' : 'Phone number';
   });
 }
 
-// Business phone with country code dropdown
-(()=>{
-  const input = document.getElementById('cf_phone');
-  const cc    = document.getElementById('cf_phone_cc');
-  if (!input) return;
-
-  function formatIntl(val) { return val.replace(/[^\d\s\-\+\(\)]/g,''); }
-  function isNorthAmerica() { return cc.value === '+1' || cc.value === '+1-CA'; }
-
-  input.addEventListener('input', e => {
-    const pos = e.target.selectionStart;
-    const prev = e.target.value;
-    const formatted = isNorthAmerica() ? formatUS(prev) : formatIntl(prev);
-    e.target.value = formatted;
-    const diff = formatted.length - prev.length;
-    e.target.setSelectionRange(pos + diff, pos + diff);
-  });
-
-  cc.addEventListener('change', () => {
-    input.value = isNorthAmerica()
-      ? formatUS(input.value)
-      : input.value.replace(/[^\d\s\-\+\(\)]/g,'');
-    input.placeholder = isNorthAmerica() ? '(555) 000-0000' : 'Phone number';
-  });
-})();
-
-// All other plain phone fields
-['cf_p_phone','cf_s_phone'].forEach(id => attachPhoneFormat(document.getElementById(id)));
-
-// Extra contact phone fields (added dynamically — patch after insertion)
-const _origAddExtra = window.addExtraContact;
-window.addExtraContact = function(...args) {
-  if (_origAddExtra) _origAddExtra.apply(this, args);
-  // Find the newest ec_phone_N and attach formatter
-  let n = 1;
-  while (document.getElementById(`ec_phone_${n}`)) n++;
-  attachPhoneFormat(document.getElementById(`ec_phone_${n-1}`));
-};
+// Wire all static phone fields
+attachPhoneWithCC('cf_phone',   'cf_phone_cc');
+attachPhoneWithCC('cf_p_phone', 'cf_p_phone_cc');
+attachPhoneWithCC('cf_s_phone', 'cf_s_phone_cc');
 
 // ── Interactions ──────────────────────────────────────
 function pick(id, btn, trigger) {
@@ -1577,11 +1563,12 @@ function addContact() {
     <div class="g2">
       <div class="field"><label class="flabel">Full Name <span class="req">*</span></label><input class="finput" id="ec_name_${n}" type="text" placeholder="First and last name"><span class="ferr" id="err_ecname_${n}">Required.</span></div>
       <div class="field"><label class="flabel">Role / Title <span class="req">*</span></label><input class="finput" id="ec_role_${n}" type="text" placeholder="e.g. Sales, Ops"><span class="ferr" id="err_ecrole_${n}">Required.</span></div>
-      <div class="field"><label class="flabel">Phone <span class="req">*</span></label><input class="finput" id="ec_phone_${n}" type="tel" placeholder="(555) 000-0000"><span class="ferr" id="err_ecphone_${n}">Required.</span></div>
+      <div class="field"><label class="flabel">Phone <span class="req">*</span></label><div class="phone-wrap"><select class="phone-cc" id="ec_phone_cc_${n}" aria-label="Country code">${CC_OPTIONS}</select><input class="finput phone-num" id="ec_phone_${n}" type="tel" placeholder="(555) 000-0000"></div><span class="ferr" id="err_ecphone_${n}">Required.</span></div>
       <div class="field"><label class="flabel">Email <span class="req">*</span></label><input class="finput" id="ec_email_${n}" type="email" placeholder="name@business.com"><span class="ferr" id="err_ecemail_${n}">Valid email required.</span></div>
     </div>
   `;
   list.appendChild(div);
+  attachPhoneWithCC(`ec_phone_${n}`, `ec_phone_cc_${n}`);
 }
 
 function removeContact(n) {
