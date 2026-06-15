@@ -123,30 +123,33 @@ body::before {
   margin-bottom: 20px;
 }
 
+/* Animate gradient stops as CSS custom properties — single element, no overlay */
+@property --hw-c1 { syntax: '<color>'; inherits: false; initial-value: #0F2030; }
+@property --hw-c2 { syntax: '<color>'; inherits: false; initial-value: #0F2030; }
+@property --hw-c3 { syntax: '<color>'; inherits: false; initial-value: #0F2030; }
+@property --hw-c4 { syntax: '<color>'; inherits: false; initial-value: #0F2030; }
+
 .hero-title em {
   font-style: normal;
   font-weight: 800;
   position: relative;
   display: inline-block;
   margin-top: 10px;
-  color: var(--text);
-}
-/* Gradient text fades IN on top of solid — no webkit manipulation on base glyph */
-.hero-title em::before {
-  content: attr(data-text);
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to right, #1E5F8A 0%, #3A9AB8 40%, #4AAFC4 70%, #5ECFDE 100%);
+  background: linear-gradient(to right, var(--hw-c1) 0%, var(--hw-c2) 40%, var(--hw-c3) 70%, var(--hw-c4) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1);
+  transition:
+    --hw-c1 0.65s cubic-bezier(0.16,1,0.3,1),
+    --hw-c2 0.65s cubic-bezier(0.16,1,0.3,1),
+    --hw-c3 0.65s cubic-bezier(0.16,1,0.3,1),
+    --hw-c4 0.65s cubic-bezier(0.16,1,0.3,1);
 }
-.hero-title em.reveal::before {
-  opacity: 1;
+.hero-title em.reveal {
+  --hw-c1: #1E5F8A;
+  --hw-c2: #3A9AB8;
+  --hw-c3: #4AAFC4;
+  --hw-c4: #5ECFDE;
 }
 .hero-title em::after {
   content: '';
@@ -950,7 +953,7 @@ body::before {
   <!-- Hero -->
   <div class="hero">
     <div class="hero-eyebrow">New Client Intake &mdash; Confidential</div>
-    <h1 class="hero-title">Let's understand<br><em id="heroWord" data-text="your business.">your business.</em></h1>
+    <h1 class="hero-title">Let's understand<br><em id="heroWord">your business.</em></h1>
     <p class="hero-body">This discovery form helps us build a clear picture of where you are today, where you want to go, and how we can best support your goals. Take your time — there are no wrong answers.</p>
     <div class="progress-row">
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
