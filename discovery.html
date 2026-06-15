@@ -273,7 +273,11 @@ body::before {
 }
 .finput::placeholder, .ftextarea::placeholder { color: #bbb; }
 .finput:focus, .fselect:focus, .ftextarea:focus { border-color: var(--teal); background: #fff; }
-.finput.err { border-color: var(--red); background: rgba(74,175,196,0.04); }
+.finput.err, .phone-wrap.err .finput { border-color: #e05252 !important; background: rgba(224,82,82,0.04) !important; }
+.phone-wrap.err .phone-cc { border-color: #e05252 !important; }
+.field.err-field > .flabel { color: #e05252; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-5px)} 40%,80%{transform:translateX(5px)} }
+.shake { animation: shake 0.35s ease; }
 /* Phone field with country code */
 .phone-wrap { display:flex; gap:8px; align-items:stretch; }
 .phone-cc { background:var(--surface); border:1px solid var(--border); border-radius:12px; color:var(--text); font-family:var(--font); font-size:13px; padding:10px 28px 10px 10px; outline:none; cursor:pointer; flex-shrink:0; width:88px; appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A95A8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 10px center; transition:border-color .2s,background-color .2s; }
@@ -311,7 +315,8 @@ body::before {
   transition: border-color 0.2s, color 0.2s;
 }
 .client-name-input::placeholder { color: #ccc; }
-.client-name-input:focus { border-color: var(--red); color: var(--ink); }
+.client-name-input:focus { border-color: var(--teal); color: var(--ink); }
+.client-name-input.err { border-bottom-color: #e05252; }
 
 /* ── Contacts ── */
 .contacts-divider {
@@ -1588,7 +1593,19 @@ function chk(inputId, errId, testFn) {
   if (!inp) return true;
   const bad = !testFn(inp.value.trim());
   inp.classList.toggle('err', bad);
+  const field = inp.closest('.field');
+  if (field) field.classList.toggle('err-field', bad);
+  // Also mark phone-wrap if inside one
+  const wrap = inp.closest('.phone-wrap');
+  if (wrap) wrap.classList.toggle('err', bad);
   if (err) err.classList.toggle('show', bad);
+  // Clear on next input
+  if (bad) inp.addEventListener('input', () => {
+    inp.classList.remove('err');
+    if (wrap) wrap.classList.remove('err');
+    if (field) field.classList.remove('err-field');
+    if (err) err.classList.remove('show');
+  }, { once: true });
   return !bad;
 }
 
@@ -1597,8 +1614,12 @@ function validateForm() {
 
   // Business name (client name input)
   const cni = document.getElementById('clientName');
-  if (!cni.value.trim()) { cni.style.borderBottomColor = 'var(--red)'; ok = false; }
-  else cni.style.borderBottomColor = '';
+  const cniBad = !cni.value.trim();
+  cni.classList.toggle('err', cniBad);
+  if (cniBad) {
+    ok = false;
+    cni.addEventListener('input', () => cni.classList.remove('err'), { once: true });
+  }
 
   if (!chk('cf_phone', 'err_phone', v => !!v)) ok = false;
   if (!chk('cf_email', 'err_email', v => emailRe.test(v))) ok = false;
@@ -1627,6 +1648,15 @@ function validateForm() {
     if (!chk(`ec_email_${n}`, `err_ecemail_${n}`, v => emailRe.test(v))) ok = false;
   });
 
+  if (!ok) {
+    // Scroll to first problem field
+    const firstErr = document.querySelector('.finput.err, .client-name-input.err');
+    if (firstErr) {
+      firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstErr.closest('.section-card, .contact-card')?.classList.add('shake');
+      setTimeout(() => document.querySelectorAll('.shake').forEach(el => el.classList.remove('shake')), 400);
+    }
+  }
   return ok;
 }
 
