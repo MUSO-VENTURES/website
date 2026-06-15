@@ -938,8 +938,9 @@ body::before {
 
     <div class="g2">
       <div class="field">
-        <label class="flabel">Business Phone</label>
-        <input class="finput" id="cf_phone" type="tel" placeholder="(555) 000-0000">
+        <label class="flabel">Business Phone <span class="req">*</span></label>
+        <input class="finput" id="cf_phone" type="tel" placeholder="(555) 000-0000" required>
+        <span class="ferr" id="err_phone">Phone number is required.</span>
       </div>
       <div class="field">
         <label class="flabel">Business Email <span class="req">*</span></label>
@@ -947,8 +948,9 @@ body::before {
         <span class="ferr" id="err_email">Please enter a valid email.</span>
       </div>
       <div class="field span2">
-        <label class="flabel">Business Address / Location</label>
-        <input class="finput" id="cf_address" type="text" placeholder="City, State or full address">
+        <label class="flabel">Business Address / Location <span class="req">*</span></label>
+        <input class="finput" id="cf_address" type="text" placeholder="City, State or full address" required>
+        <span class="ferr" id="err_address">Address is required.</span>
       </div>
       <div class="field span2">
         <label class="flabel">Website URL</label>
@@ -1477,7 +1479,9 @@ function validateForm() {
   if (!cni.value.trim()) { cni.style.borderBottomColor = 'var(--red)'; ok = false; }
   else cni.style.borderBottomColor = '';
 
+  if (!chk('cf_phone', 'err_phone', v => !!v)) ok = false;
   if (!chk('cf_email', 'err_email', v => emailRe.test(v))) ok = false;
+  if (!chk('cf_address', 'err_address', v => !!v)) ok = false;
   if (!chk('cf_p_name', 'err_p_name', v => !!v)) ok = false;
   if (!chk('cf_p_role', 'err_p_role', v => !!v)) ok = false;
   if (!chk('cf_p_phone', 'err_p_phone', v => !!v)) ok = false;
