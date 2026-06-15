@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Shane Musseau — MUSO VENTURES</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #0F2030;
+      --navy-mid:   #1A3550;
+      --navy-card:  #162840;
+      --teal:       #4AAFC4;
+      --teal-dark:  #3A9AB8;
+      --teal-light: #5ECFDE;
+      --grad:       linear-gradient(to right, #1E5F8A, #3A9AB8, #4AAFC4, #5ECFDE);
+      --text:       #EBF0F5;
+      --muted:      #7AACBE;
+      --font:       'Lexend', sans-serif;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: var(--font);
+      background: var(--navy);
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px 16px 48px;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(74,175,196,.18) 0%, transparent 70%),
+        var(--navy);
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(74,175,196,.12);
+    }
+
+    /* ── Header ──────────────────────────── */
+    .card-head {
+      background: #F5F8FA;
+      padding: 32px 28px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-head::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--grad);
+    }
+
+    .head-logo {
+      height: 44px;
+      width: auto;
+      mix-blend-mode: multiply;
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .head-eyebrow {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--teal-dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .head-eyebrow::before,
+    .head-eyebrow::after {
+      content: '';
+      flex: 0 0 24px;
+      height: 1.5px;
+      background: var(--teal);
+      opacity: .5;
+    }
+
+    .head-name {
+      font-size: clamp(32px, 8vw, 42px);
+      font-weight: 800;
+      line-height: 1;
+      color: #0F2030;
+      margin-bottom: 6px;
+    }
+    .head-name span {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .head-rule {
+      height: 2px;
+      background: var(--grad);
+      border-radius: 999px;
+      margin: 10px 0 12px;
+      width: 100%;
+    }
+
+    .head-titles {
+      font-size: 13px;
+      font-weight: 400;
+      color: #5A7A92;
+      letter-spacing: .02em;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 0;
+    }
+    .head-titles span { color: #9BB5C5; margin: 0 6px; }
+
+    /* ── Body ────────────────────────────── */
+    .card-body {
+      background: var(--navy-mid);
+      padding: 28px 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .info-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .info-tile {
+      background: var(--navy-card);
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid rgba(74,175,196,.1);
+      text-decoration: none;
+      transition: border-color .2s, transform .15s;
+      display: block;
+    }
+    .info-tile:hover {
+      border-color: rgba(74,175,196,.35);
+      transform: translateY(-1px);
+    }
+    .info-tile.full { grid-column: 1 / -1; }
+
+    .tile-icon {
+      width: 32px; height: 32px;
+      background: rgba(74,175,196,.12);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 10px;
+    }
+    .tile-icon svg { width: 16px; height: 16px; stroke: var(--teal); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    .tile-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 4px;
+    }
+    .tile-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    /* ── QR Section ──────────────────────── */
+    .qr-tile {
+      background: var(--navy-card);
+      border-radius: 14px;
+      padding: 20px;
+      border: 1px solid rgba(74,175,196,.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .qr-wrap {
+      background: #fff;
+      border-radius: 14px;
+      padding: 14px;
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #qrcode { width: 100%; }
+    #qrcode canvas, #qrcode img {
+      width: 100% !important;
+      height: auto !important;
+      display: block;
+    }
+
+    .qr-info {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .qr-text { flex: 1; }
+    .qr-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+    .qr-sub {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .btn-vcf {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--grad);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      padding: 9px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: opacity .2s, transform .15s;
+    }
+    .btn-vcf:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-vcf svg { width: 13px; height: 13px; fill: #fff; }
+
+    /* ── Footer buttons ──────────────────── */
+    .card-foot {
+      background: var(--navy);
+      padding: 16px 20px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      border-top: 1px solid rgba(74,175,196,.08);
+    }
+
+    .foot-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 13px 10px;
+      border-radius: 12px;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s;
+      letter-spacing: .01em;
+    }
+    .foot-btn--outline {
+      border: 1.5px solid rgba(74,175,196,.35);
+      color: var(--teal);
+      background: transparent;
+    }
+    .foot-btn--outline:hover { border-color: var(--teal); background: rgba(74,175,196,.07); }
+    .foot-btn--solid {
+      background: var(--grad);
+      color: #fff;
+      border: none;
+    }
+    .foot-btn--solid:hover { opacity: .88; }
+    .foot-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- Header -->
+  <div class="card-head">
+    <img class="head-logo" src="assets/logo-color.png" alt="MUSO VENTURES"/>
+    <div class="head-eyebrow">Creative Technology Studio</div>
+    <div class="head-name">Shane <span>Musseau</span></div>
+    <div class="head-rule"></div>
+    <div class="head-titles">
+      CEO <span>·</span> Motion Designer <span>·</span> Creative Technologist
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div class="card-body">
+
+    <!-- Email (full width) -->
+    <a class="info-tile full" href="mailto:shane@muso-ventures.com">
+      <div class="tile-icon">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+      </div>
+      <div class="tile-label">Email</div>
+      <div class="tile-value">shane@muso-ventures.com</div>
+    </a>
+
+    <!-- Phone + Location -->
+    <div class="info-row">
+      <a class="info-tile" href="tel:+17072456495">
+        <div class="tile-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.12 2.18 2 2 0 012.1 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <div class="tile-label">Phone</div>
+        <div class="tile-value">707.245.6495</div>
+      </a>
+
+      <div class="info-tile">
+        <div class="tile-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="tile-label">Location</div>
+        <div class="tile-value">Livermore, CA<br>Remote</div>
+      </div>
+    </div>
+
+    <!-- LinkedIn (full width) -->
+    <a class="info-tile full" href="https://linkedin.com/in/shane-musseau-1315a534" target="_blank" rel="noopener">
+      <div class="tile-icon">
+        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </div>
+      <div class="tile-label">LinkedIn</div>
+      <div class="tile-value">linkedin.com/in/shane-musseau-1315a534</div>
+    </a>
+
+    <!-- QR Code -->
+    <div class="qr-tile">
+      <div class="qr-wrap">
+        <div id="qrcode"></div>
+      </div>
+      <div class="qr-info">
+        <div class="qr-text">
+          <div class="qr-title">Scan to save contact</div>
+          <div class="qr-sub">iPhone &amp; Android — saves info directly to your contacts.</div>
+        </div>
+        <a class="btn-vcf" href="shane-musseau.vcf" download>
+          <svg viewBox="0 0 16 16"><path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          Download .vcf
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="card-foot">
+    <a class="foot-btn foot-btn--outline" href="https://musoventures.com" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+      musoventures.com
+    </a>
+    <a class="foot-btn foot-btn--solid" href="index.html">
+      Portfolio
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+    </a>
+  </div>
+
+</div>
+
+<script>
+// Generate QR code encoding a vCard
+const vcard = [
+  'BEGIN:VCARD',
+  'VERSION:3.0',
+  'FN:Shane Musseau',
+  'N:Musseau;Shane;;;',
+  'ORG:MUSO VENTURES',
+  'TITLE:CEO, Motion Designer, Creative Technologist',
+  'TEL;TYPE=CELL:+17072456495',
+  'EMAIL:shane@muso-ventures.com',
+  'URL:https://musoventures.com',
+  'ADR;TYPE=WORK:;;Livermore, CA;;;US',
+  'NOTE:Creative Technology Studio',
+  'END:VCARD'
+].join('\n');
+
+new QRCode(document.getElementById('qrcode'), {
+  text: vcard,
+  width: 300,
+  height: 300,
+  colorDark: '#0F2030',
+  colorLight: '#ffffff',
+  correctLevel: QRCode.CorrectLevel.M
+});
+</script>
+
+</body>
+</html>
