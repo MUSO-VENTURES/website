@@ -1122,7 +1122,7 @@ body::before {
 document.getElementById('dateStamp').textContent = new Date().toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
 
 // ── Config ────────────────────────────────────────────
-const FORMSPREE = 'https://formspree.io/f/mlgkjdaz'; // update as needed
+const FORMSPREE = 'https://formspree.io/f/YOUR_FORM_ID'; // replace YOUR_FORM_ID from formspree.io
 
 // ── Sections / Questions ──────────────────────────────
 const sections = [
@@ -1671,6 +1671,7 @@ async function sendToFormspree(c, services) {
 
   const payload = {
     _subject:         `Discovery: ${c.clientName || 'New Client'} — MUSO VENTURES`,
+    _to:              'shane@muso-ventures.com',
     _replyto:         c.pEmail || c.email,
     business_name:    c.clientName,
     industry:         c.industry,
