@@ -128,15 +128,28 @@ body::before {
   font-weight: 800;
   position: relative;
   display: inline-block;
+}
+.hw-solid {
+  color: var(--text);
+}
+.hw-grad {
+  position: absolute;
+  left: 0; top: 0;
   background: var(--grad-brand);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.55s ease-in-out;
+}
+.hero-title em.reveal .hw-grad {
+  opacity: 1;
 }
 .hero-title em::after {
   content: '';
   position: absolute;
-  bottom: -6px;
+  bottom: -11px;
   left: 0;
   width: 0;
   height: 5px;
@@ -935,7 +948,7 @@ body::before {
   <!-- Hero -->
   <div class="hero">
     <div class="hero-eyebrow">New Client Intake &mdash; Confidential</div>
-    <h1 class="hero-title">Let's understand<br><em>your business.</em></h1>
+    <h1 class="hero-title">Let's understand<br><em id="heroWord"><span class="hw-solid">your business.</span><span class="hw-grad" aria-hidden="true">your business.</span></em></h1>
     <p class="hero-body">This discovery form helps us build a clear picture of where you are today, where you want to go, and how we can best support your goals. Take your time — there are no wrong answers.</p>
     <div class="progress-row">
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
