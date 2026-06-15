@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUSO VENTURES — Client Discovery</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #F5F8FA;
+  --surface: #EBF0F5;
+  --card:    #ffffff;
+  --border:  rgba(26,63,92,.12);
+  --accent:  #1E5F8A;
+  --red:     #4AAFC4;   /* repurposed: teal replaces red accent */
+  --gold:    #3A9AB8;
+  --text:    #0F2030;
+  --muted:   #7A95A8;
+  --success: #2e7d52;
+  --ink:     #0F2030;
+  --blue:    #1E5F8A;
+  --purple:  #3A9AB8;
+  --teal:    #4AAFC4;
+  --teal-dark: #3A9AB8;
+  --navy:    #1E5F8A;
+  --grad-brand: linear-gradient(135deg,#1E5F8A 0%,#3A9AB8 40%,#4AAFC4 70%,#5ECFDE 100%);
+  --grad-dark:  linear-gradient(135deg,#1A3F5C 0%,#0C1E2E 100%);
+  --shadow-sm: 0 2px 12px rgba(26,63,92,.1);
+  --shadow-md: 0 8px 32px rgba(26,63,92,.14);
+  --radius-pill: 999px;
+  --font: 'Lexend', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-weight: 400;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 56px 28px 120px;
+}
+
+/* ── Brand bar ── */
+.brand-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 48px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  animation: fadeUp 0.5s ease forwards;
+}
+
+.brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-rule {
+  width: 32px;
+  height: 3px;
+  background: var(--red);
+}
+
+.brand-name {
+  font-family: var(--font);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.brand-tagline {
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── Hero ── */
+.hero {
+  margin-bottom: 52px;
+  opacity: 0;
+  animation: fadeUp 0.65s ease 0.08s forwards;
+}
+
+.hero-eyebrow {
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.hero-title {
+  font-family: var(--font);
+  font-size: clamp(38px, 7vw, 68px);
+  color: var(--ink);
+  line-height: 1.05;
+  margin-bottom: 20px;
+}
+
+.hero-title em {
+  font-style: normal;
+  font-weight: 800;
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-body {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 520px;
+  margin-bottom: 28px;
+}
+
+/* ── Progress ── */
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.progress-track {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--red);
+  border-radius: 12px;
+  width: 0%;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+.progress-stat {
+  font-family: var(--font);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+/* ── Module: Business Info ── */
+.info-module {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--teal);
+  border-radius: 12px;
+  padding: 36px;
+  margin-bottom: 44px;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.05);
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.15s forwards;
+}
+
+.module-header {
+  margin-bottom: 28px;
+}
+
+.module-kicker {
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.module-title {
+  font-family: var(--font);
+  font-size: 24px;
+  color: var(--ink);
+}
+
+.module-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-top: 4px;
+}
+
+/* grid */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.span2 { grid-column: 1 / -1; }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+
+.flabel {
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.flabel .req { color: var(--red); margin-left: 2px; }
+
+.finput, .fselect, .ftextarea {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  padding: 10px 13px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  width: 100%;
+}
+.finput::placeholder, .ftextarea::placeholder { color: #bbb; }
+.finput:focus, .fselect:focus, .ftextarea:focus { border-color: var(--teal); background: #fff; }
+.finput.err { border-color: var(--red); background: rgba(74,175,196,0.04); }
+
+.ferr {
+  font-family: var(--font);
+  font-size: 10px;
+  color: var(--red);
+  letter-spacing: 0.04em;
+  display: none;
+}
+.ferr.show { display: block; }
+
+/* ── Client name hero input ── */
+.client-name-field {
+  margin-bottom: 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.client-name-input {
+  font-family: var(--font);
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 400;
+  color: #555;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--border);
+  outline: none;
+  width: 100%;
+  padding-bottom: 8px;
+  line-height: 1.1;
+  transition: border-color 0.2s, color 0.2s;
+}
+.client-name-input::placeholder { color: #ccc; }
+.client-name-input:focus { border-color: var(--red); color: var(--ink); }
+
+/* ── Contacts ── */
+.contacts-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 32px 0 24px;
+}
+
+.contacts-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.contacts-kicker {
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.add-contact-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--gold);
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.add-contact-btn:hover { border-color: var(--gold); background: rgba(74,175,196,0.06); }
+
+.contact-card {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 12px;
+  background: var(--surface);
+  animation: fadeUp 0.3s ease forwards;
+}
+.contact-card.primary   { border-left-color: var(--teal); }
+.contact-card.secondary { border-left-color: var(--muted); }
+.contact-card.extra     { border-left-color: var(--gold); }
+
+.contact-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.cc-label {
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.contact-card.primary .cc-label   { color: var(--ink); }
+.contact-card.extra   .cc-label   { color: var(--gold); }
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 15px;
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 12px;
+  line-height: 1;
+  transition: color 0.2s, background 0.2s;
+}
+.remove-btn:hover { color: var(--red); background: rgba(74,175,196,0.08); }
+
+/* opt-in */
+.optin-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+.optin-row input[type=checkbox] {
+  accent-color: var(--red);
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  margin-top: 2px;
+  cursor: pointer;
+}
+.optin-text { font-size: 12px; color: var(--muted); line-height: 1.55; }
+.optin-text strong { color: var(--text); font-weight: 500; }
+
+/* ── Divider ── */
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 8px 0 10px;
+}
+
+/* ── Section group ── */
+.section-group {
+  margin-bottom: 36px;
+  padding: 24px 24px 12px;
+  background: rgba(255,255,255,0.5);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--ink);
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  opacity: 0;
+  animation: fadeUp 0.5s ease forwards;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.section-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex: 1;
+}
+
+.section-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* section accent colors — MUSO brand teal/navy scale */
+.section-group[data-s="1"] { border-left-color: #1E5F8A; }
+.section-group[data-s="1"] .section-num { background: #1E5F8A; }
+.section-group[data-s="2"] { border-left-color: #256e9e; }
+.section-group[data-s="2"] .section-num { background: #256e9e; }
+.section-group[data-s="3"] { border-left-color: #2d7dae; }
+.section-group[data-s="3"] .section-num { background: #2d7dae; }
+.section-group[data-s="4"] { border-left-color: #3A9AB8; }
+.section-group[data-s="4"] .section-num { background: #3A9AB8; }
+.section-group[data-s="5"] { border-left-color: #42a7c4; }
+.section-group[data-s="5"] .section-num { background: #42a7c4; }
+.section-group[data-s="6"] { border-left-color: #4AAFC4; }
+.section-group[data-s="6"] .section-num { background: #4AAFC4; }
+
+/* ── Question card ── */
+.q-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 26px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  transition: border-color 0.25s, box-shadow 0.25s;
+  opacity: 0;
+  animation: fadeUp 0.4s ease forwards;
+}
+.q-card:last-child { margin-bottom: 0; }
+.q-card:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+.q-card.answered { border-color: rgba(192,57,43,0.25); }
+
+.q-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.q-num {
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.q-tag {
+  font-family: var(--font);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 12px;
+  background: rgba(74,175,196,0.12);
+  color: var(--gold);
+  border: 1px solid rgba(184,134,11,0.25);
+}
+
+.q-text {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+
+/* choices */
+.choices { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+
+.choice-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.18s;
+  line-height: 1.3;
+}
+.choice-btn:hover { border-color: var(--ink); color: var(--ink); }
+.choice-btn.selected {
+  border-color: var(--red);
+  color: var(--red);
+  background: rgba(192,57,43,0.07);
+  font-weight: 500;
+}
+
+/* notes */
+.notes-label {
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+
+.notes-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  padding: 10px 12px;
+  resize: vertical;
+  min-height: 66px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.notes-input::placeholder { color: #bbb; }
+.notes-input:focus { border-color: var(--ink); }
+
+/* conditional reveal */
+.cond-panel {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
+  pointer-events: none;
+}
+.cond-panel.open { max-height: 1200px; opacity: 1; pointer-events: auto; }
+
+.cond-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(184,134,11,0.06);
+  border: 1px dashed rgba(184,134,11,0.3);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── Service breakdown ── */
+.services-module {
+  margin-top: 44px;
+  opacity: 0;
+  animation: fadeUp 0.5s ease 0.3s forwards;
+}
+
+.services-gate {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 26px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.service-panel {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
+  pointer-events: none;
+}
+.service-panel.open { max-height: 3200px; opacity: 1; pointer-events: auto; }
+
+.service-intro {
+  padding: 18px 0 6px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.s-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 12px;
+  transition: border-color 0.25s;
+}
+.s-card.lit { border-color: rgba(184,134,11,0.4); }
+
+.s-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+
+.s-icon {
+  width: 34px;
+  height: 34px;
+  background: rgba(26,26,46,0.06);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.s-name {
+  font-family: var(--font);
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.s-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.s-flabel {
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.chip {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: 12px;
+  padding: 5px 11px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.chip:hover { border-color: var(--gold); color: var(--text); }
+.chip.on { border-color: var(--gold); background: rgba(74,175,196,0.12); color: var(--gold); }
+
+.avg-select {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 8px 32px 8px 12px;
+  outline: none;
+  width: 100%;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%237a7470' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 11px center;
+}
+.avg-select:focus { border-color: var(--ink); }
+
+/* ── Action bar ── */
+.action-bar {
+  margin-top: 52px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.35s forwards;
+}
+
+.submit-btn {
+  background: var(--grad-brand);
+  border: none;
+  color: #fff;
+  font-family: var(--font);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  padding: 16px 44px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34,1.2,0.64,1), box-shadow 0.3s cubic-bezier(0.34,1.2,0.64,1);
+}
+.submit-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 32px rgba(26,63,92,.28); }
+
+.reset-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 16px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.reset-btn:hover { border-color: var(--muted); color: var(--text); }
+
+/* ── Summary panel ── */
+.summary-panel {
+  display: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--success);
+  border-radius: 12px;
+  padding: 40px;
+  margin-top: 52px;
+  box-shadow: 0 2px 18px rgba(0,0,0,0.07);
+}
+.summary-panel.visible { display: block; animation: fadeUp 0.5s ease forwards; }
+
+.summary-panel h2 {
+  font-family: var(--font);
+  font-size: 30px;
+  color: var(--success);
+  margin-bottom: 6px;
+}
+
+.summary-lead { color: var(--muted); font-size: 13px; margin-bottom: 32px; }
+
+.sum-section-head {
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 28px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.sum-section-head:first-of-type { margin-top: 0; }
+
+.sum-item {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 12px 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+
+.sum-q {
+  font-family: var(--font);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  padding-top: 2px;
+}
+
+.sum-a {
+  font-family: var(--font);
+  font-size: 15px;
+  color: var(--red);
+  line-height: 1.3;
+}
+
+.sum-a.empty { color: var(--muted); font-style: italic; font-family: var(--font); font-size: 13px; }
+
+.sum-notes {
+  grid-column: 2;
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.55;
+  opacity: 0.75;
+  margin-top: -6px;
+}
+
+.sum-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.out-btn {
+  background: transparent;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 11px 22px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.out-btn.green { border: 1px solid var(--success); color: var(--success); }
+.out-btn.green:hover { background: rgba(46,125,82,0.08); }
+
+.out-btn.gold { border: 1px solid var(--gold); color: var(--gold); }
+.out-btn.gold:hover { background: rgba(184,134,11,0.08); }
+
+/* ── Contact summary block ── */
+.contact-sum-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+  margin-bottom: 16px;
+}
+
+.csf { display: flex; flex-direction: column; gap: 2px; }
+.csf-l { font-size: 10px; color: var(--muted); font-family: var(--font); letter-spacing: 0.05em; }
+.csf-v { font-size: 13px; color: var(--text); }
+.csf-v.red { color: var(--red); }
+
+.contact-pill {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 13px;
+  margin-bottom: 8px;
+}
+.cpill-label { font-size: 9px; color: var(--muted); font-family: var(--font); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 4px; }
+.cpill-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+.cpill-detail { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.cpill-email { font-size: 11px; color: var(--red); }
+
+/* ── Print ── */
+#printHead { display: none; }
+
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body { background: #fff !important; }
+  body::before { display: none; }
+  .shell { max-width: 100%; padding: 0; }
+  .brand-bar, .hero, .info-module, .section-divider,
+  #questionnaire, .services-module, .action-bar,
+  .summary-panel h2, .summary-lead, .sum-actions { display: none !important; }
+  .summary-panel {
+    display: block !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+  }
+  #printHead { display: block !important; }
+  .sum-item { page-break-inside: avoid; }
+  .sum-a { color: #c0392b !important; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 580px) {
+  .g2, .s-grid { grid-template-columns: 1fr; }
+  .span2 { grid-column: 1; }
+  .choices { flex-direction: column; }
+  .choice-btn { width: 100%; text-align: left; }
+  .section-group { padding: 18px 14px 8px; }
+  .info-module { padding: 24px 20px; }
+  .sum-item { grid-template-columns: 1fr; }
+  .sum-q { padding-bottom: 0; }
+  .contact-sum-row { grid-template-columns: 1fr; }
+}
+
+@media (pointer: coarse) {
+  .choice-btn, .chip { min-height: 44px; }
+  .submit-btn, .reset-btn, .out-btn { min-height: 48px; }
+  .finput, .notes-input { font-size: 16px; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- Brand bar -->
+  <div class="brand-bar">
+    <div class="brand-mark">
+      <img src="assets/logo-color.png" alt="MUSO VENTURES" style="height:48px;width:auto;mix-blend-mode:multiply"/>
+    </div>
+    <div class="brand-tagline">Client Discovery &mdash; <span id="dateStamp"></span></div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-eyebrow">New Client Intake &mdash; Confidential</div>
+    <h1 class="hero-title">Let's understand<br><em>your business.</em></h1>
+    <p class="hero-body">This discovery form helps us build a clear picture of where you are today, where you want to go, and how we can best support your goals. Take your time — there are no wrong answers.</p>
+    <div class="progress-row">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-stat" id="progressStat">0 of 0 answered</div>
+    </div>
+  </div>
+
+  <!-- Business Info Module -->
+  <div class="info-module" id="infoModule">
+    <div class="module-header">
+      <div class="module-kicker">Section 0 &mdash; Business Information</div>
+      <div class="module-title">Who are you?</div>
+      <div class="module-desc">Tell us about your business and how to reach you. Fields marked <span style="color:var(--red)">*</span> are required.</div>
+    </div>
+
+    <!-- Client / Business name hero -->
+    <div class="client-name-field">
+      <label class="flabel" style="margin-bottom:8px; display:block;">Client / Business Name <span class="req">*</span></label>
+      <input class="client-name-input" id="clientName" type="text" placeholder="Enter business name…" oninput="onClientName(this.value)">
+    </div>
+
+    <div class="g2">
+      <div class="field">
+        <label class="flabel">Business Phone</label>
+        <input class="finput" id="cf_phone" type="tel" placeholder="(555) 000-0000">
+      </div>
+      <div class="field">
+        <label class="flabel">Business Email <span class="req">*</span></label>
+        <input class="finput" id="cf_email" type="email" placeholder="hello@yourbusiness.com">
+        <span class="ferr" id="err_email">Please enter a valid email.</span>
+      </div>
+      <div class="field span2">
+        <label class="flabel">Business Address / Location</label>
+        <input class="finput" id="cf_address" type="text" placeholder="City, State or full address">
+      </div>
+      <div class="field span2">
+        <label class="flabel">Website URL</label>
+        <input class="finput" id="cf_website" type="url" placeholder="https://yourbusiness.com">
+      </div>
+      <div class="field">
+        <label class="flabel">Industry / Business Type</label>
+        <input class="finput" id="cf_industry" type="text" placeholder="e.g. Auto, Retail, Medical">
+      </div>
+      <div class="field">
+        <label class="flabel">Years in Business</label>
+        <input class="finput" id="cf_years" type="text" placeholder="e.g. 3 years, since 2019">
+      </div>
+      <div class="field span2">
+        <label class="flabel">How did you hear about MUSO VENTURES?</label>
+        <input class="finput" id="cf_referral" type="text" placeholder="e.g. Google, referral from…, social media">
+      </div>
+    </div>
+
+    <!-- Key contacts -->
+    <hr class="contacts-divider">
+    <div class="contacts-head">
+      <span class="contacts-kicker">Key Contacts</span>
+      <button class="add-contact-btn" onclick="addContact()">+ Add Contact</button>
+    </div>
+
+    <!-- Primary -->
+    <div class="contact-card primary">
+      <div class="contact-card-head">
+        <span class="cc-label">Primary Contact</span>
+      </div>
+      <div class="g2">
+        <div class="field">
+          <label class="flabel">Full Name <span class="req">*</span></label>
+          <input class="finput" id="cf_p_name" type="text" placeholder="First and last name">
+          <span class="ferr" id="err_p_name">Required.</span>
+        </div>
+        <div class="field">
+          <label class="flabel">Role / Title <span class="req">*</span></label>
+          <input class="finput" id="cf_p_role" type="text" placeholder="e.g. Owner, GM, Marketing Dir.">
+          <span class="ferr" id="err_p_role">Required.</span>
+        </div>
+        <div class="field">
+          <label class="flabel">Direct Phone <span class="req">*</span></label>
+          <input class="finput" id="cf_p_phone" type="tel" placeholder="(555) 000-0000">
+          <span class="ferr" id="err_p_phone">Required.</span>
+        </div>
+        <div class="field">
+          <label class="flabel">Direct Email <span class="req">*</span></label>
+          <input class="finput" id="cf_p_email" type="email" placeholder="name@business.com">
+          <span class="ferr" id="err_p_email">Valid email required.</span>
+        </div>
+        <div class="field span2">
+          <label class="flabel">Best Time to Reach</label>
+          <input class="finput" id="cf_p_time" type="text" placeholder="e.g. Weekdays 9am–5pm CST">
+        </div>
+        <div class="field span2">
+          <label class="flabel">Preferred Contact Method</label>
+          <div class="choices" style="margin-bottom:0;">
+            <button class="choice-btn" onclick="togglePref(this)">Phone call</button>
+            <button class="choice-btn" onclick="togglePref(this)">Text message</button>
+            <button class="choice-btn" onclick="togglePref(this)">Email</button>
+            <button class="choice-btn" onclick="togglePref(this)">Video call</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary -->
+    <div class="contact-card secondary">
+      <div class="contact-card-head">
+        <span class="cc-label">Secondary Contact</span>
+      </div>
+      <div class="g2">
+        <div class="field">
+          <label class="flabel">Full Name</label>
+          <input class="finput" id="cf_s_name" type="text" placeholder="First and last name">
+          <span class="ferr" id="err_s_name">Required if filling this card.</span>
+        </div>
+        <div class="field">
+          <label class="flabel">Role / Title</label>
+          <input class="finput" id="cf_s_role" type="text" placeholder="e.g. Office Manager">
+          <span class="ferr" id="err_s_role">Required if filling this card.</span>
+        </div>
+        <div class="field">
+          <label class="flabel">Direct Phone</label>
+          <input class="finput" id="cf_s_phone" type="tel" placeholder="(555) 000-0000">
+          <span class="ferr" id="err_s_phone">Required if filling this card.</span>
+        </div>
+        <div class="field">
+          <label class="flabel">Direct Email</label>
+          <input class="finput" id="cf_s_email" type="email" placeholder="name@business.com">
+          <span class="ferr" id="err_s_email">Valid email required.</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="extraContactsList"></div>
+
+    <!-- Opt-in -->
+    <div class="optin-row">
+      <input type="checkbox" id="cf_optin" checked>
+      <label class="optin-text" for="cf_optin">
+        <strong>Stay in the loop with MUSO VENTURES</strong> — occasional tips on web presence, local marketing, and digital tools for small businesses. No spam, unsubscribe anytime.
+      </label>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Discovery Questions -->
+  <div id="questionnaire"></div>
+
+  <!-- Service Breakdown -->
+  <div class="services-module" id="servicesModule">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+      <span class="section-num" style="background:#0d0d0d;">+</span>
+      <span class="section-title">Service Breakdown</span>
+      <span class="section-rule"></span>
+    </div>
+    <div class="services-gate q-card" style="opacity:1;animation:none;">
+      <div class="q-meta"><span class="q-num">OPTIONAL</span></div>
+      <div class="q-text">Would you like to break down your primary services and average ticket value per customer visit?</div>
+      <div class="choices">
+        <button class="choice-btn" onclick="openServices(this, true)">Yes — let's detail it</button>
+        <button class="choice-btn" onclick="openServices(this, false)">No — skip this</button>
+      </div>
+      <div class="service-panel" id="servicePanel">
+        <div class="service-intro">For each relevant category, select the job types you offer and the typical dollar range per visit.</div>
+        <div id="serviceCardsWrap"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action bar -->
+  <div class="action-bar">
+    <button class="submit-btn" onclick="submitForm()">Submit Discovery</button>
+    <button class="reset-btn" onclick="resetForm()">Start Over</button>
+  </div>
+
+  <!-- Summary -->
+  <div class="summary-panel" id="summaryPanel">
+    <div id="printHead">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid #1a1a1a;">
+        <div>
+          <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#888;margin-bottom:4px;font-family:monospace;">MUSO VENTURES — Client Discovery</div>
+          <div style="font-size:34px;font-weight:400;color:#1a1a1a;line-height:1;font-family:Georgia,serif;" id="printName">Discovery</div>
+          <div style="font-size:11px;color:#888;margin-top:4px;font-family:monospace;" id="printDate"></div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:9px;color:#888;text-transform:uppercase;letter-spacing:0.1em;font-family:monospace;">Prepared by</div>
+          <div style="font-size:13px;font-weight:600;color:#1a1a1a;">Shane Musseau</div>
+          <div style="font-size:11px;color:#888;font-family:monospace;">MUSO VENTURES</div>
+        </div>
+      </div>
+    </div>
+    <h2>Discovery Complete</h2>
+    <p class="summary-lead">All responses captured. Export as PDF or copy to clipboard below.</p>
+    <div id="summaryBody"></div>
+    <div class="sum-actions">
+      <button class="out-btn green" onclick="copyToClipboard()">Copy Summary</button>
+      <button class="out-btn gold" onclick="exportPDF()">Export PDF</button>
+    </div>
+  </div>
+
+</div>
+<script>
+// ── Stamp today's date ───────────────────────────────
+document.getElementById('dateStamp').textContent = new Date().toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+
+// ── Config ────────────────────────────────────────────
+const FORMSPREE = 'https://formspree.io/f/mlgkjdaz'; // update as needed
+
+// ── Sections / Questions ──────────────────────────────
+const sections = [
+  {
+    id: 1,
+    label: "About the Business",
+    questions: [
+      {
+        text: "How long has the business been operating?",
+        choices: ["Under 1 year", "1–3 years", "3–7 years", "7–15 years", "15+ years"]
+      },
+      {
+        text: "Who are your primary customers?",
+        choices: ["Individual consumers", "Local small businesses", "Larger companies / enterprise", "Government or nonprofits", "A mix of multiple"]
+      },
+      {
+        text: "How would you describe your current customer volume?",
+        choices: ["Very low — just getting started", "Moderate and steady", "Busy and at near-capacity", "Seasonal or highly variable", "Growing fast, hard to keep up"]
+      },
+      {
+        text: "What's your primary revenue model?",
+        choices: ["One-time product or service sales", "Ongoing contracts / subscriptions", "Project-based work", "Mixed revenue streams", "Still figuring it out"]
+      }
+    ]
+  },
+  {
+    id: 2,
+    label: "Online Presence",
+    questions: [
+      {
+        text: "How current and accurate is your website?",
+        choices: ["No website", "Has one — very outdated", "Has one — somewhat current", "Has one — recently updated", "Has one — actively maintained"]
+      },
+      {
+        text: "How do most new customers find you today?",
+        choices: ["Word of mouth / referrals", "Google / online search", "Social media", "Walk-in / signage", "Paid advertising", "Mix of multiple channels"]
+      },
+      {
+        text: "How is your Google Business Profile set up?",
+        choices: ["Not sure what that is", "Claimed but rarely updated", "Partially filled in", "Fully optimized with strong reviews"]
+      },
+      {
+        text: "Are you active on social media for your business?",
+        choices: ["Not at all", "Account exists but dormant", "Post occasionally", "Consistent posting schedule", "Actively growing an audience"]
+      }
+    ]
+  },
+  {
+    id: 3,
+    label: "Challenges & Pain Points",
+    questions: [
+      {
+        text: "What's your biggest frustration with how you communicate with customers?",
+        choices: ["No real follow-up system", "Phone-only is slow and unreliable", "Missing appointments or reminders", "No centralized system at all", "Not a significant issue right now"]
+      },
+      {
+        text: "Does your online presence reflect your actual quality of work?",
+        choices: ["Definitely not — big gap", "Probably not", "Somewhat", "Pretty well", "Yes, absolutely"]
+      },
+      {
+        text: "Can customers book, request quotes, or contact you online?",
+        choices: ["No — all calls or walk-ins", "Basic contact form only", "Partial online capability", "Fully online — works well"]
+      },
+      {
+        text: "How do you currently handle reviews and reputation?",
+        choices: ["Don't manage it at all", "Check occasionally, rarely respond", "Ask for reviews but inconsistently", "Actively request and respond to reviews"]
+      }
+    ]
+  },
+  {
+    id: 4,
+    label: "Growth & Goals",
+    questions: [
+      {
+        text: "What's your primary focus for growth right now?",
+        choices: ["Acquire brand-new customers", "Retain and upsell existing customers", "Equal focus on both", "Expand to new locations or markets", "Not actively focused on growth at this time"]
+      },
+      {
+        text: "Is there a specific product or service you most want to promote?",
+        choices: ["Our core / flagship offering", "A new or underperforming service", "High-margin or premium items", "Everything equally", "Not sure yet"]
+      },
+      {
+        text: "Have you considered a loyalty or referral program?",
+        choices: ["Never thought about it", "Interested but haven't done it", "Tried something informal", "Have an active program"]
+      },
+      {
+        text: "What does success look like 6 months after working with us?",
+        choices: ["More website traffic", "More calls and qualified leads", "Stronger online reputation", "A streamlined customer journey", "All of the above"]
+      }
+    ]
+  },
+  {
+    id: 5,
+    label: "Marketing & Technology",
+    questions: [
+      {
+        text: "Are you currently running any paid advertising?",
+        choices: ["Nothing at all", "Tried it, stopped", "Running basic ads", "Actively investing in ads", "Not sure / someone else handles it"]
+      },
+      {
+        text: "Who currently manages your marketing or tech?",
+        choices: ["Just me — no help", "An employee handles it", "An outside vendor or agency", "Mix of staff and vendors", "Essentially nothing managed"],
+        trigger: "vendor-q",
+        triggerOn: ["An employee handles it", "An outside vendor or agency", "Mix of staff and vendors"]
+      },
+      {
+        text: "Is that marketing or tech relationship working well?",
+        choices: ["Yes — happy with it", "It's okay, could be better", "Not really — looking for alternatives", "We recently ended that relationship"],
+        conditional: "vendor-q"
+      },
+      {
+        text: "Have you worked with a web or marketing agency before?",
+        choices: ["Never", "Yes — poor experience", "Yes — mixed experience", "Yes — great experience"],
+        conditional: "vendor-q"
+      },
+      {
+        text: "Who makes the final call on marketing or tech investments?",
+        choices: ["Just me", "Me and a partner", "Family group decision", "Department head or manager", "Outside advisor or board"]
+      }
+    ]
+  },
+  {
+    id: 6,
+    label: "Budget & Timeline",
+    questions: [
+      {
+        text: "Where are you in the decision-making process?",
+        choices: ["Just exploring options", "Comparing a few vendors", "Ready to move soon", "Need this immediately"]
+      },
+      {
+        text: "Do you have a budget range in mind for this project?",
+        choices: ["Not yet — need a proposal first", "Under $1,000", "$1,000 – $2,500", "$2,500 – $5,000", "$5,000 – $10,000", "$10,000+", "Open to the right solution"]
+      },
+      {
+        text: "Is there a specific deadline or event driving this project?",
+        choices: ["No hard deadline", "Within the next 30 days", "Within 60–90 days", "End of quarter", "End of year", "Specific event or launch"]
+      }
+    ]
+  }
+];
+
+const serviceCategories = [
+  { id: 'core',        icon: '⭐', name: 'Core Service',             chips: ['Standard offering', 'Premium tier', 'Rush / priority', 'Bulk / volume'],       ranges: ['Under $50','$50–$150','$150–$300','$300–$500','$500+'] },
+  { id: 'consult',     icon: '💬', name: 'Consultation / Assessment', chips: ['Initial consult', 'Ongoing advisory', 'Full assessment', 'Follow-up session'],  ranges: ['Under $100','$100–$200','$200–$400','$400+'] },
+  { id: 'maintenance', icon: '🔧', name: 'Maintenance / Ongoing',     chips: ['Monthly plan', 'Annual contract', 'As-needed visits', 'Emergency callout'],    ranges: ['Under $75','$75–$150','$150–$300','$300+'] },
+  { id: 'premium',     icon: '🏆', name: 'Premium / Specialty',       chips: ['High-end work', 'Custom project', 'Specialty materials', 'White-glove tier'],  ranges: ['Under $200','$200–$500','$500–$1,000','$1,000+'] },
+  { id: 'digital',     icon: '💻', name: 'Digital / Online',          chips: ['Website / app', 'Social media', 'Email marketing', 'Paid ads'],                ranges: ['Under $500','$500–$1,500','$1,500–$3,000','$3,000+'] },
+  { id: 'other',       icon: '📦', name: 'Other / Bundles',           chips: ['Add-on service', 'Product sale', 'Resale item', 'Bundle package'],             ranges: ['Under $50','$50–$100','$100–$200','$200+'] }
+];
+
+// ── State ─────────────────────────────────────────────
+const qState = {};
+let totalQ = 0;
+let extraCount = 0;
+let clientLabel = '';
+
+function onClientName(v) { clientLabel = v.trim(); }
+
+function togglePref(btn) {
+  btn.classList.toggle('selected');
+}
+
+// ── Build questionnaire ──────────────────────────────
+function build() {
+  const wrap = document.getElementById('questionnaire');
+  let gIdx = 0;
+
+  sections.forEach((sec, si) => {
+    sec.questions.forEach((q, qi) => {
+      totalQ++;
+      qState[`q${si}_${qi}`] = { choice: null, notes: '' };
+    });
+  });
+
+  sections.forEach((sec, si) => {
+    const group = document.createElement('div');
+    group.className = 'section-group';
+    group.dataset.s = sec.id;
+    group.style.animationDelay = (si * 0.07) + 's';
+
+    const head = document.createElement('div');
+    head.className = 'section-head';
+    head.innerHTML = `<span class="section-num">${sec.id}</span><span class="section-title">${sec.label}</span><span class="section-rule"></span>`;
+    group.appendChild(head);
+
+    sec.questions.forEach((q, qi) => {
+      gIdx++;
+      const id = `q${si}_${qi}`;
+
+      if (q.trigger) {
+        group.appendChild(buildCard(id, gIdx, q));
+        const panel = document.createElement('div');
+        panel.className = 'cond-panel';
+        panel.id = `cp_${q.trigger}`;
+        panel.innerHTML = `<div class="cond-hint">&#9656; Answer above to reveal follow-up questions</div>`;
+        group.appendChild(panel);
+      } else if (q.conditional) {
+        const panel = document.getElementById(`cp_${q.conditional}`);
+        if (panel) panel.appendChild(buildCard(id, gIdx, q));
+      } else {
+        group.appendChild(buildCard(id, gIdx, q));
+      }
+    });
+
+    wrap.appendChild(group);
+  });
+
+  buildServiceCards();
+  updateProgress();
+}
+
+function buildCard(id, n, q) {
+  const card = document.createElement('div');
+  card.className = 'q-card';
+  card.id = `card_${id}`;
+  card.style.animationDelay = Math.min(n * 0.025, 0.35) + 's';
+
+  const tagHTML = q.conditional ? `<span class="q-tag">Follow-up</span>` : '';
+  card.innerHTML = `
+    <div class="q-meta">
+      <span class="q-num">Q${String(n).padStart(2,'0')}</span>
+      ${tagHTML}
+    </div>
+    <div class="q-text">${q.text}</div>
+    <div class="choices" id="ch_${id}">
+      ${q.choices.map(c => `<button class="choice-btn" onclick="pick('${id}',this,'${q.trigger||''}')">${c}</button>`).join('')}
+    </div>
+    <div class="notes-label">Notes / Context</div>
+    <textarea class="notes-input" placeholder="Add any context, specifics, or clarifications…" oninput="note('${id}',this.value)"></textarea>
+  `;
+  return card;
+}
+
+function buildServiceCards() {
+  const wrap = document.getElementById('serviceCardsWrap');
+  serviceCategories.forEach(svc => {
+    const card = document.createElement('div');
+    card.className = 's-card';
+    card.id = `sc_${svc.id}`;
+    card.innerHTML = `
+      <div class="s-head">
+        <div class="s-icon">${svc.icon}</div>
+        <div class="s-name">${svc.name}</div>
+      </div>
+      <div class="s-grid">
+        <div>
+          <div class="s-flabel">Common Job Types</div>
+          <div class="chips">
+            ${svc.chips.map(c => `<button class="chip" onclick="toggleChip(this,'sc_${svc.id}')">${c}</button>`).join('')}
+          </div>
+        </div>
+        <div>
+          <div class="s-flabel">Avg $ Per Visit</div>
+          <select class="avg-select" onchange="litCard('sc_${svc.id}')">
+            <option value="">Select range…</option>
+            ${svc.ranges.map(r => `<option>${r}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+
+// ── Interactions ──────────────────────────────────────
+function pick(id, btn, trigger) {
+  document.getElementById(`ch_${id}`).querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  qState[id].choice = btn.textContent;
+  document.getElementById(`card_${id}`)?.classList.add('answered');
+
+  if (trigger) {
+    const si = parseInt(id.slice(1).split('_')[0]);
+    const qi = parseInt(id.split('_')[1]);
+    const q = sections[si]?.questions[qi];
+    const reveal = q?.triggerOn?.includes(qState[id].choice);
+    document.getElementById(`cp_${trigger}`)?.classList.toggle('open', !!reveal);
+  }
+  updateProgress();
+}
+
+function note(id, val) { qState[id].notes = val; }
+
+function toggleChip(btn, cardId) { btn.classList.toggle('on'); litCard(cardId); }
+function litCard(cardId) {
+  const c = document.getElementById(cardId);
+  if (!c) return;
+  c.classList.toggle('lit', !!(c.querySelector('.chip.on') || c.querySelector('.avg-select')?.value));
+}
+
+function openServices(btn, yes) {
+  btn.closest('.choices').querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('servicePanel').classList.toggle('open', yes);
+}
+
+// ── Progress ──────────────────────────────────────────
+function updateProgress() {
+  const answered = Object.values(qState).filter(v => v.choice !== null).length;
+  const pct = totalQ > 0 ? (answered / totalQ) * 100 : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressStat').textContent = `${answered} of ${totalQ} answered`;
+}
+
+// ── Extra contacts ────────────────────────────────────
+function addContact() {
+  extraCount++;
+  const n = extraCount;
+  const list = document.getElementById('extraContactsList');
+  const div = document.createElement('div');
+  div.className = 'contact-card extra';
+  div.id = `ec_${n}`;
+  div.innerHTML = `
+    <div class="contact-card-head">
+      <span class="cc-label">Additional Contact ${n}</span>
+      <button class="remove-btn" onclick="removeContact(${n})">&#x2715;</button>
+    </div>
+    <div class="g2">
+      <div class="field"><label class="flabel">Full Name <span class="req">*</span></label><input class="finput" id="ec_name_${n}" type="text" placeholder="First and last name"><span class="ferr" id="err_ecname_${n}">Required.</span></div>
+      <div class="field"><label class="flabel">Role / Title <span class="req">*</span></label><input class="finput" id="ec_role_${n}" type="text" placeholder="e.g. Sales, Ops"><span class="ferr" id="err_ecrole_${n}">Required.</span></div>
+      <div class="field"><label class="flabel">Phone <span class="req">*</span></label><input class="finput" id="ec_phone_${n}" type="tel" placeholder="(555) 000-0000"><span class="ferr" id="err_ecphone_${n}">Required.</span></div>
+      <div class="field"><label class="flabel">Email <span class="req">*</span></label><input class="finput" id="ec_email_${n}" type="email" placeholder="name@business.com"><span class="ferr" id="err_ecemail_${n}">Valid email required.</span></div>
+    </div>
+  `;
+  list.appendChild(div);
+}
+
+function removeContact(n) {
+  const el = document.getElementById(`ec_${n}`);
+  if (!el) return;
+  el.style.opacity = '0';
+  el.style.transition = 'opacity 0.2s';
+  setTimeout(() => el.remove(), 200);
+}
+
+// ── Validation ────────────────────────────────────────
+const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function chk(inputId, errId, testFn) {
+  const inp = document.getElementById(inputId);
+  const err = document.getElementById(errId);
+  if (!inp) return true;
+  const bad = !testFn(inp.value.trim());
+  inp.classList.toggle('err', bad);
+  if (err) err.classList.toggle('show', bad);
+  return !bad;
+}
+
+function validateForm() {
+  let ok = true;
+
+  // Business name (client name input)
+  const cni = document.getElementById('clientName');
+  if (!cni.value.trim()) { cni.style.borderBottomColor = 'var(--red)'; ok = false; }
+  else cni.style.borderBottomColor = '';
+
+  if (!chk('cf_email', 'err_email', v => emailRe.test(v))) ok = false;
+  if (!chk('cf_p_name', 'err_p_name', v => !!v)) ok = false;
+  if (!chk('cf_p_role', 'err_p_role', v => !!v)) ok = false;
+  if (!chk('cf_p_phone', 'err_p_phone', v => !!v)) ok = false;
+  if (!chk('cf_p_email', 'err_p_email', v => emailRe.test(v))) ok = false;
+
+  // Secondary only if partially filled
+  const s2Filled = ['cf_s_name','cf_s_role','cf_s_phone','cf_s_email'].some(id => document.getElementById(id)?.value.trim());
+  if (s2Filled) {
+    if (!chk('cf_s_name', 'err_s_name', v => !!v)) ok = false;
+    if (!chk('cf_s_role', 'err_s_role', v => !!v)) ok = false;
+    if (!chk('cf_s_phone', 'err_s_phone', v => !!v)) ok = false;
+    if (!chk('cf_s_email', 'err_s_email', v => emailRe.test(v))) ok = false;
+  }
+
+  // Extra contacts
+  document.querySelectorAll('[id^="ec_"]').forEach(el => {
+    if (!el.id.match(/^ec_\d+$/)) return;
+    const n = el.id.split('_')[1];
+    if (!chk(`ec_name_${n}`, `err_ecname_${n}`, v => !!v)) ok = false;
+    if (!chk(`ec_role_${n}`, `err_ecrole_${n}`, v => !!v)) ok = false;
+    if (!chk(`ec_phone_${n}`, `err_ecphone_${n}`, v => !!v)) ok = false;
+    if (!chk(`ec_email_${n}`, `err_ecemail_${n}`, v => emailRe.test(v))) ok = false;
+  });
+
+  return ok;
+}
+
+// ── Collect data ──────────────────────────────────────
+function collectContactData() {
+  const extras = [];
+  document.querySelectorAll('[id^="ec_"]').forEach(el => {
+    if (!el.id.match(/^ec_\d+$/)) return;
+    const n = el.id.split('_')[1];
+    extras.push({
+      name:  document.getElementById(`ec_name_${n}`)?.value.trim() || '',
+      role:  document.getElementById(`ec_role_${n}`)?.value.trim() || '',
+      phone: document.getElementById(`ec_phone_${n}`)?.value.trim() || '',
+      email: document.getElementById(`ec_email_${n}`)?.value.trim() || ''
+    });
+  });
+
+  const prefBtns = [...document.querySelectorAll('#infoModule .contact-card.primary .choice-btn.selected')];
+  const prefs = prefBtns.map(b => b.textContent).join(', ');
+
+  return {
+    clientName:  document.getElementById('clientName').value.trim(),
+    phone:       document.getElementById('cf_phone').value.trim(),
+    email:       document.getElementById('cf_email').value.trim(),
+    address:     document.getElementById('cf_address').value.trim(),
+    website:     document.getElementById('cf_website').value.trim(),
+    industry:    document.getElementById('cf_industry').value.trim(),
+    years:       document.getElementById('cf_years').value.trim(),
+    referral:    document.getElementById('cf_referral').value.trim(),
+    pName:       document.getElementById('cf_p_name').value.trim(),
+    pRole:       document.getElementById('cf_p_role').value.trim(),
+    pPhone:      document.getElementById('cf_p_phone').value.trim(),
+    pEmail:      document.getElementById('cf_p_email').value.trim(),
+    pTime:       document.getElementById('cf_p_time').value.trim(),
+    pPref:       prefs,
+    sName:       document.getElementById('cf_s_name').value.trim(),
+    sRole:       document.getElementById('cf_s_role').value.trim(),
+    sPhone:      document.getElementById('cf_s_phone').value.trim(),
+    sEmail:      document.getElementById('cf_s_email').value.trim(),
+    extras,
+    optin: document.getElementById('cf_optin').checked
+  };
+}
+
+function collectServiceData() {
+  if (!document.getElementById('servicePanel').classList.contains('open')) return null;
+  const out = {};
+  document.querySelectorAll('#serviceCardsWrap .s-card').forEach(card => {
+    const chips = [...card.querySelectorAll('.chip.on')].map(c => c.textContent);
+    const avg   = card.querySelector('.avg-select')?.value || '';
+    const name  = card.querySelector('.s-name').textContent;
+    if (chips.length || avg) out[name] = { chips, avg };
+  });
+  return Object.keys(out).length ? out : null;
+}
+
+// ── Submit ────────────────────────────────────────────
+function submitForm() {
+  if (!validateForm()) {
+    document.getElementById('infoModule').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+
+  const c = collectContactData();
+  const services = collectServiceData();
+  renderSummary(c, services);
+
+  document.getElementById('summaryPanel').classList.add('visible');
+  document.getElementById('summaryPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  sendToFormspree(c, services);
+}
+
+// ── Render summary ────────────────────────────────────
+function renderSummary(c, services) {
+  const body = document.getElementById('summaryBody');
+  body.innerHTML = '';
+
+  // Contact block
+  body.insertAdjacentHTML('beforeend', `<div class="sum-section-head">Business Information</div>`);
+
+  const contactRow = document.createElement('div');
+  contactRow.className = 'contact-sum-row';
+  const cFields = [
+    ['Business',        c.clientName],
+    ['Industry',        c.industry],
+    ['Years in Biz',    c.years],
+    ['Business Phone',  c.phone],
+    ['Business Email',  c.email, true],
+    ['Location',        c.address],
+    ['Website',         c.website],
+    ['Referred By',     c.referral]
+  ];
+  cFields.filter(([,v])=>v).forEach(([l,v,red]) => {
+    const d = document.createElement('div');
+    d.className = 'csf';
+    d.innerHTML = `<div class="csf-l">${l}</div><div class="csf-v${red?' red':''}">${v}</div>`;
+    contactRow.appendChild(d);
+  });
+  body.appendChild(contactRow);
+
+  const pillWrap = document.createElement('div');
+  const pillData = [
+    ['Primary Contact',   c.pName, c.pRole, c.pPhone, c.pEmail, c.pTime, c.pPref],
+    ['Secondary Contact', c.sName, c.sRole, c.sPhone, c.sEmail, null, null],
+    ...c.extras.map((x,i) => [`Additional Contact ${i+1}`, x.name, x.role, x.phone, x.email, null, null])
+  ].filter(([,name]) => name);
+  pillData.forEach(([label, name, role, phone, email, time, pref]) => {
+    pillWrap.insertAdjacentHTML('beforeend', `
+      <div class="contact-pill">
+        <div class="cpill-label">${label}</div>
+        <div class="cpill-name">${name}${role ? ` <span style="color:var(--muted);font-weight:300;font-size:12px;">— ${role}</span>` : ''}</div>
+        ${phone ? `<div class="cpill-detail">${phone}${pref ? ` &bull; Prefers: ${pref}` : ''}${time ? ` &bull; ${time}` : ''}</div>` : ''}
+        ${email ? `<div class="cpill-email">${email}</div>` : ''}
+      </div>
+    `);
+  });
+  body.appendChild(pillWrap);
+
+  body.insertAdjacentHTML('beforeend', `<div style="margin-top:8px;font-size:11px;color:${c.optin?'var(--success)':'var(--muted)'};">
+    ${c.optin ? '&#x2713; Opted into MUSO VENTURES contact list' : '&mdash; Did not opt in'}
+  </div>`);
+
+  // Questions
+  let gIdx = 0;
+  sections.forEach((sec, si) => {
+    body.insertAdjacentHTML('beforeend', `<div class="sum-section-head">${sec.label}</div>`);
+    sec.questions.forEach((q, qi) => {
+      gIdx++;
+      const id = `q${si}_${qi}`;
+      const entry = qState[id];
+      const hasAnswer = !!entry.choice;
+      body.insertAdjacentHTML('beforeend', `
+        <div class="sum-item">
+          <div class="sum-q">Q${String(gIdx).padStart(2,'0')} &mdash; ${q.text}</div>
+          <div class="sum-a${hasAnswer?'':' empty'}">${entry.choice || '— Not answered'}</div>
+          ${entry.notes ? `<div class="sum-notes">${entry.notes}</div>` : ''}
+        </div>
+      `);
+    });
+  });
+
+  // Services
+  if (services) {
+    body.insertAdjacentHTML('beforeend', `<div class="sum-section-head">Service Breakdown</div>`);
+    Object.entries(services).forEach(([name, data]) => {
+      body.insertAdjacentHTML('beforeend', `
+        <div style="background:var(--surface);border:1px solid rgba(184,134,11,0.3);border-radius:2px;padding:12px 14px;margin-bottom:8px;">
+          <div style="font-family:'DM Serif Display',serif;font-size:15px;color:var(--ink);margin-bottom:5px;">${name}</div>
+          ${data.chips.length ? `<div style="font-size:12px;color:var(--muted);">Job types: <span style="color:var(--text)">${data.chips.join(', ')}</span></div>` : ''}
+          ${data.avg ? `<div style="font-size:12px;color:var(--success);margin-top:3px;">Avg per visit: ${data.avg}</div>` : ''}
+        </div>
+      `);
+    });
+  }
+}
+
+// ── Formspree ─────────────────────────────────────────
+async function sendToFormspree(c, services) {
+  const btn = document.querySelector('.submit-btn');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  const payload = {
+    _subject:         `Discovery: ${c.clientName || 'New Client'} — MUSO VENTURES`,
+    _replyto:         c.pEmail || c.email,
+    business_name:    c.clientName,
+    industry:         c.industry,
+    years:            c.years,
+    phone:            c.phone,
+    email:            c.email,
+    location:         c.address,
+    website:          c.website,
+    referral:         c.referral,
+    primary_contact:  `${c.pName} — ${c.pRole} | ${c.pPhone} | ${c.pEmail}` + (c.pPref ? ` | Prefers: ${c.pPref}` : '') + (c.pTime ? ` | ${c.pTime}` : ''),
+    secondary_contact: c.sName ? `${c.sName} — ${c.sRole} | ${c.sPhone} | ${c.sEmail}` : 'N/A',
+    opted_in:         c.optin ? 'Yes' : 'No',
+    full_responses:   buildPlainText(c, services)
+  };
+
+  c.extras.forEach((x, i) => {
+    payload[`extra_contact_${i+1}`] = `${x.name} — ${x.role} | ${x.phone} | ${x.email}`;
+  });
+
+  try {
+    const res = await fetch(FORMSPREE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      btn.textContent = '✓ Sent to MUSO VENTURES';
+      btn.style.background = 'var(--success)';
+    } else {
+      btn.textContent = 'Send Failed — Copy Summary';
+      btn.disabled = false;
+    }
+  } catch {
+    btn.textContent = 'Network Error — Copy Summary';
+    btn.disabled = false;
+  }
+}
+
+// ── Plain text export ─────────────────────────────────
+function buildPlainText(c, services) {
+  const label = c.clientName || 'New Client';
+  let out = `${label.toUpperCase()} — MUSO VENTURES DISCOVERY\n${'='.repeat(label.length + 28)}\n`;
+  out += `Date: ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}\n\n`;
+  out += `BUSINESS INFORMATION\n--------------------\n`;
+  if (c.clientName) out += `Business:  ${c.clientName}\n`;
+  if (c.industry)   out += `Industry:  ${c.industry}\n`;
+  if (c.years)      out += `Years:     ${c.years}\n`;
+  if (c.phone)      out += `Phone:     ${c.phone}\n`;
+  if (c.email)      out += `Email:     ${c.email}\n`;
+  if (c.address)    out += `Location:  ${c.address}\n`;
+  if (c.website)    out += `Website:   ${c.website}\n`;
+  if (c.referral)   out += `Referral:  ${c.referral}\n`;
+
+  const pRow = (label, name, role, phone, email, extra = '') => {
+    if (!name) return '';
+    let s = `\n${label}\n  Name:   ${name}${role?' — '+role:''}\n`;
+    if (phone) s += `  Phone:  ${phone}\n`;
+    if (email) s += `  Email:  ${email}\n`;
+    if (extra) s += `  ${extra}\n`;
+    return s;
+  };
+  out += pRow('Primary Contact', c.pName, c.pRole, c.pPhone, c.pEmail,
+    [c.pPref ? `Prefers: ${c.pPref}` : '', c.pTime ? `Best time: ${c.pTime}` : ''].filter(Boolean).join(' | '));
+  out += pRow('Secondary Contact', c.sName, c.sRole, c.sPhone, c.sEmail);
+  c.extras.forEach((x, i) => { out += pRow(`Additional Contact ${i+1}`, x.name, x.role, x.phone, x.email); });
+  out += `\nOpt-in: ${c.optin?'Yes':'No'}\n`;
+
+  let gIdx = 0;
+  sections.forEach((sec, si) => {
+    out += `\n\n${sec.label.toUpperCase()}\n${'='.repeat(sec.label.length)}\n`;
+    sec.questions.forEach((q, qi) => {
+      gIdx++;
+      const id = `q${si}_${qi}`;
+      const e = qState[id];
+      out += `\nQ${String(gIdx).padStart(2,'0')}: ${q.text}\nAnswer: ${e.choice || 'Not answered'}\n`;
+      if (e.notes) out += `Notes:  ${e.notes}\n`;
+    });
+  });
+
+  if (services) {
+    out += `\n\nSERVICE BREAKDOWN\n=================\n`;
+    Object.entries(services).forEach(([name, data]) => {
+      out += `\n${name}\n`;
+      if (data.chips.length) out += `  Jobs: ${data.chips.join(', ')}\n`;
+      if (data.avg) out += `  Avg:  ${data.avg}\n`;
+    });
+  }
+
+  return out;
+}
+
+// ── Copy ──────────────────────────────────────────────
+function copyToClipboard() {
+  const c = collectContactData();
+  const services = collectServiceData();
+  navigator.clipboard.writeText(buildPlainText(c, services)).then(() => {
+    const btn = document.querySelector('.out-btn.green');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy Summary', 2000);
+  });
+}
+
+// ── PDF ───────────────────────────────────────────────
+function exportPDF() {
+  const label = clientLabel || document.getElementById('clientName')?.value.trim() || 'Discovery';
+  document.getElementById('printName').textContent = label;
+  document.getElementById('printDate').textContent = `Submitted: ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}`;
+  document.getElementById('printHead').style.display = 'block';
+  setTimeout(() => {
+    window.print();
+    setTimeout(() => { document.getElementById('printHead').style.display = 'none'; }, 1000);
+  }, 150);
+}
+
+// ── Reset ─────────────────────────────────────────────
+function resetForm() {
+  Object.keys(qState).forEach(id => { qState[id] = { choice: null, notes: '' }; });
+  document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.notes-input').forEach(t => t.value = '');
+  document.querySelectorAll('.q-card').forEach(c => c.classList.remove('answered'));
+  document.querySelectorAll('.cond-panel').forEach(p => p.classList.remove('open'));
+  document.getElementById('summaryPanel').classList.remove('visible');
+
+  ['clientName','cf_phone','cf_email','cf_address','cf_website','cf_industry','cf_years','cf_referral',
+   'cf_p_name','cf_p_role','cf_p_phone','cf_p_email','cf_p_time',
+   'cf_s_name','cf_s_role','cf_s_phone','cf_s_email'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value = ''; el.classList.remove('err'); el.style.borderBottomColor = ''; }
+  });
+  document.querySelectorAll('.ferr').forEach(e => e.classList.remove('show'));
+  document.getElementById('cf_optin').checked = true;
+  clientLabel = '';
+  document.getElementById('extraContactsList').innerHTML = '';
+  extraCount = 0;
+  document.getElementById('servicePanel').classList.remove('open');
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  document.querySelectorAll('.avg-select').forEach(s => s.value = '');
+  document.querySelectorAll('.s-card').forEach(c => c.classList.remove('lit'));
+  document.querySelector('.services-gate .choices')?.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+  const sub = document.querySelector('.submit-btn');
+  sub.textContent = 'Submit Discovery';
+  sub.style.background = '';
+  sub.disabled = false;
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Init ──────────────────────────────────────────────
+build();
+</script>
+</body>
+</html>
