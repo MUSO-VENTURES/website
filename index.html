@@ -441,7 +441,7 @@
     .p-step p{font-size:.86rem}
     /* Segmented connector line */
     .proc-connector{position:absolute;top:36px;left:0;width:100%;pointer-events:none;z-index:0}
-    .proc-seg{position:absolute;top:0;height:2px;background:var(--teal);border-radius:999px;width:0;transition:width .7s ease;opacity:.5}
+    .proc-seg{position:absolute;top:0;height:2px;background:var(--teal);border-radius:999px;width:0;transition:width .9s ease;opacity:.5}
     .proc-seg.drawn{width:100%}
 
     /* ── Clients ─────────────────────────────────────── */
@@ -1528,8 +1528,8 @@ gsap.utils.toArray('.gfade').forEach(el=>{
         if(i<4){
           // Wait 600ms after step activates before drawing line (let user read)
           setTimeout(()=>{ document.getElementById('pseg'+i).style.width='100%'; },600);
-          // Next step activates 1400ms after this one (600 read + 700 line draw + 100 pause)
-          setTimeout(()=>activate(i+1),1400);
+          // Next step activates exactly when line finishes: 600ms pause + 900ms line draw
+          setTimeout(()=>activate(i+1),1500);
         }
       };
       activate(1);
